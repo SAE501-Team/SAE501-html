@@ -1,0 +1,162 @@
+.carousel-container {
+  position:relative;
+  float: left;
+  margin-bottom: 20px;
+}
+#carousel {
+  height:100%;
+  width:100%;
+  position:relative;
+  margin-bottom:20px;
+  font-size:12px;
+  font-family: Arial;
+}
+.carousel-image {
+  display:block;
+  border: 1px solid #F9F9F9;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.carousel-feature span{
+  display: block;
+}
+.carousel-feature {
+  position:absolute;
+  top:-1000px;
+  left:-1000px;
+  cursor:pointer;
+}
+.carousel-feature .carousel-caption {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 5px;
+}
+.carousel-feature .carousel-caption p {
+  margin:0;
+  font-size:16px;
+}
+.tracker-summation-container {
+  position: absolute;
+  color: white;
+  right: 0px;
+  bottom: 0px;
+  padding: 0px 7px;
+  margin: 0px;
+  background-color: #7bae23;
+}
+.tracker-individual-container {
+  position: absolute;
+  color: white;
+  bottom: 0px;
+  padding: 0;
+  margin: 0 auto;
+  left: 50%;
+}
+.tracker-individual-container li {
+  list-style:none;
+}
+.tracker-individual-container .tracker-individual-blip {
+  margin: 0 2px;
+  padding: 0 6px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 15px;
+  width: 15px;
+  overflow: hidden;
+  border: 1px solid #dadada;
+  line-height: 13px;
+}
+.tracker-individual-container .tracker-individual-blip-selected, .tracker-individual-container .tracker-individual-blip:hover {
+  color: #7bae23;
+  font-weight: bold;
+  background-color: #7bae23;
+}
+#carousel-left {
+  position:absolute;
+  top: 50%;
+  margin-top: -44px;
+  left:15px;
+  cursor:pointer;
+  z-index: 2;
+}
+#carousel-left div{
+  background: url("../img/images/slider_sprite.png") -1px -2px no-repeat;
+  width: 35px;
+  height: 65px;
+}
+#carousel-left:hover div{
+  background-position: -38px -2px;
+}
+#carousel-right div{
+  background: url("../img/images/slider_sprite.png") -75px -2px no-repeat;
+  width: 35px;
+  height: 65px;
+}
+#carousel-right:hover div{
+  background-position: -112px -2px;
+}
+#carousel-right {
+  position:absolute;
+  top: 50%;
+  right:15px;
+  margin-top: -44px;
+  cursor:pointer;
+  z-index: 2;
+}
+.carousel-feature:after {
+  right: -20px;
+  background: -webkit-linear-gradient(left, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0) 100%);
+  background: -ms-linear-gradient(left, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0) 100%);
+  background: -moz-linear-gradient(left, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0) 100%);
+  background: linear-gradient('to right', rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0) 100%);
+}
+.carousel-feature:before {
+  left: -20px;
+  background: -webkit-linear-gradient(left, rgba(249, 249, 249, 0) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0.9) 100%);
+  background: -ms-linear-gradient(left, rgba(249, 249, 249, 0) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0.9) 100%);
+  background: -moz-linear-gradient(left, rgba(249, 249, 249, 0) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0.9) 100%);
+  background: linear-gradient('to right', rgba(249, 249, 249, 0) 0%, rgba(249, 249, 249, 0.9) 50%, rgba(249, 249, 249, 0.9) 100%);
+}
+.carousel-feature:before, .carousel-feature:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 100%;
+}
+.top_button_slider{
+  height: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #dadada;
+}
+.top_button_slider li{
+  float: left;
+}
+.top_button_slider li a{
+  padding: 3px 10px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  cursor: pointer;
+}
+.carousel-caption-opacity{
+  background-color:#000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 1px;
+  left: 1px;
+  border-radius: 5px;
+}
+.carousel-caption-cont{
+  z-index: 2222;
+  position: absolute;
+  padding-right: 20px;
+}

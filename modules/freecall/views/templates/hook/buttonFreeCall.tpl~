@@ -1,0 +1,79 @@
+<style>
+    .pozvonim-button-border-inner{
+        border: 1px solid {$settings['background_icon']|escape:'htmlall':'UTF-8'} !important;
+    }
+    #pozvonim-button:hover .pozvonim-button-border-inner {
+        border: 1px solid {$settings['background_icon_hover']|escape:'htmlall':'UTF-8'} !important;
+        width: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px  !important;
+        height: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px !important;
+        left: 33px !important;
+        top: 33px !important;
+    }
+</style>
+
+<div id="pozvonim-button" class="pozvonim-animated freecall no_ios" onclick="" style="
+
+    {if $settings['position'] == 'top_left'}
+            top: 10px;
+            left: 10px;
+    {/if}
+
+    {if $settings['position'] == 'top_right'}
+            top: 10px;
+            right: 10px;
+    {/if}
+
+    {if $settings['position'] == 'bottom_right'}
+            bottom: 10px;
+            right: 10px;
+    {/if}
+
+    {if $settings['position'] == 'bottom_left'}
+            bottom: 10px;
+            left: 10px;
+    {/if}
+
+    ">
+    <div class="pozvonim-button-wrapper actionShow" style="
+            width: {((($settings['radius'])*2 + 30)*1.5)|escape:'htmlall':'UTF-8'}px;
+            height: {((($settings['radius'])*2 + 30)*1.5)|escape:'htmlall':'UTF-8'}px;
+            ">
+        <div class="pozvonim-button-border-inner" style="
+                width: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px;
+                height: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px;
+                "></div>
+        <div class="pozvonim-button-border-outer" style="
+                border: 1px solid {$settings['background_icon']|escape:'htmlall':'UTF-8'} !important;
+                width: {(($settings['radius'])*2 + 30)|escape:'htmlall':'UTF-8'}px;
+                height: {(($settings['radius'])*2 + 30)|escape:'htmlall':'UTF-8'}px;
+        "></div>
+        <div class="pozvonim-button-text pozvonim-animated" style="
+                width: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px;
+                height: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px;
+                background-color: {$settings['background_icon_hover']|escape:'htmlall':'UTF-8'} !important;
+                ">
+            <span class="pozvonim-button-center-text" style="
+                    width: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px;
+                    height: {(($settings['radius'])*2 + 20)|escape:'htmlall':'UTF-8'}px;
+                    color: {$settings['color_icon']|escape:'htmlall':'UTF-8'};
+                    font-size: {$settings['size_title']|escape:'htmlall':'UTF-8'}px;
+                    ">
+              {$settings['title_icon']|escape:'htmlall':'UTF-8'}
+            </span>
+        </div>
+        <div class="pozvonim-button-phone pozvonim-animated" style="
+           width: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px;
+           height: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px;
+           background-color: {$settings['background_icon']|escape:'htmlall':'UTF-8'};
+         ">
+            <i class="icon-phone" style="
+                font-size: {$settings['size_icon']|escape:'htmlall':'UTF-8'}px;
+                color: {$settings['color_icon']|escape:'htmlall':'UTF-8'};
+                width: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px;
+                height: {(($settings['radius'])*2)|escape:'htmlall':'UTF-8'}px; "></i>
+        </div>
+    </div>
+    <input type="hidden" value="{$id_lang|escape:'htmlall':'UTF-8'}" name="idLang">
+    <input type="hidden" value="{$id_shop|escape:'htmlall':'UTF-8'}" name="idShop">
+    <input type="hidden" value="{$base_dir|escape:'htmlall':'UTF-8'}" name="basePath">
+</div>

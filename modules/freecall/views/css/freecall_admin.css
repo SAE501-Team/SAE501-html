@@ -1,0 +1,129 @@
+.title_form_group_class_freecall .col-lg-offset-3{
+  margin-left: 0px !important;
+  width: 100% !important;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #dadada;
+  padding: 3px 0px;
+}
+.field_width_200 input[type='text']{
+  width: 200px !important;
+}
+.field_width_50 input[type='text'], .field_width_50 textarea{
+  width: 50% !important;
+}
+@media (max-width: 1200px) {
+  .field_width_50 input[type='text'], .field_width_50 textarea{
+    width: 100% !important;
+  }
+}
+#freecall_form .selected-flag{
+  width: 200px !important;
+}
+.table_product_list{
+  width: 100%;
+}
+.table_product_list thead tr th {
+  border-bottom: solid 1px #a0d0eb;
+  border-top: solid 1px #a0d0eb;
+  background-color: #ecf6fb;
+  padding: 10px;
+}
+.table_product_list tbody tr.odd {
+  background-color: #FCFDFE !important;
+}
+.table_product_list tr td {
+  border-bottom: solid 1px #EAEDEF;
+  padding: 10px;
+}
+.table_list_id {
+  width: 5%;
+  text-align: center;
+}
+.table_list_img {
+  width: 10%;
+}
+.table_list_name {
+  width: 75%;
+}
+.table_list_delete {
+  width: 10%;
+}
+.table_list_img img {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  max-width: 55px;
+  height: auto;
+}
+.block_more_settings.hide_block{
+  display: none;
+}
+.block_more_settings.show_block{
+  display: block;
+}
+
+.style_width_100{
+  width: 100px !important;
+}
+.style_width_150{
+  width: 150px !important;
+}
+.block_selection_type ,
+.selection_quantity,
+.selection_price{
+  float: left;
+  margin-right: 5px;
+  position: relative;
+}
+
+.block_selection_type input[name="selection_type_quantity"],
+.block_selection_type input[name="selection_type_price"] {
+  float: left;
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+.block_selection_type label{
+  border: 1px solid #cccccc;
+  width: 35px;
+  text-align: center;
+  height: 31px;
+  font-size: 21px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.block_selection_type label:hover,
+.label_selection_type.active{
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.block_selection_type.condition label,
+.block_selection_type.visibility label{
+  width: 120px;
+  font-size: 13px;
+  padding-top: 5px;
+}
+.block_more_settings.hide_block_cms{
+  display: none;
+}
+.block_more_settings.show_block_cms{
+  display: block;
+}
+
+.heading-added{
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.form-group-products-add-left{
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  padding: 10px;
+}

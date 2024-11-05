@@ -1,0 +1,30 @@
+.freecall_form i,
+.pozvonim-button i{
+  font-family: FontAwesome;
+}
+
+.footer_freecall .icon-phone:before,
+.pozvonim-button .material-icons:before {
+  content: "\f095";
+}
+.footer_freecall .icon-envelope:before {
+  content: "\f0e0";
+}
+.footer_freecall .icon-comments-alt:before {
+  content: "\f0e6";
+}
+.input_phone .icon {
+  margin-left: 3px;
+  margin-right: 27px;
+}
+
+.field_captcha .icon .icon-lock{
+    text-align: center;
+    width: 45px;
+    font-size: 50px;
+    margin-top: -1px;
+}
+
+.field_captcha .icon .icon-lock:before{
+  content: "";
+}

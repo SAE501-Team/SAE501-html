@@ -1,0 +1,2 @@
+<h1 style="    border-bottom: 2px solid #dadada;    padding-bottom: 8px;margin-bottom: 30px">VarchShop template documentation</h1>
+<iframe style="height: 800px; width: 100%; border: none" src="https://myprestamodules.com/faqs/varchshop-documentation/?content_only=1"></iframe>
