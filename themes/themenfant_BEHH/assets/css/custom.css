@@ -1,0 +1,16 @@
+.custom-input {
+    border: 2px solid #4A90E2;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #F08080;
+    outline: none;
+}
+
+.tasty{
+    border: 2px solid #000000;
+}
