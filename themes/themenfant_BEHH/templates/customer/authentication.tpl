@@ -32,6 +32,10 @@
 {var_dump($urls)}
     {block name='login_form_container'}
       <p class="no-account"><strong>{l s='Login with demo account:' d='Shop.Theme.Customeraccount'}</strong><br><br>demo@demo.fr<br>demodemo</p>
+      <div id="react-root"></div>
+      <link rel="stylesheet" href="{$urls.child_theme_assets}react-app/dist/assets/index-7309e5d8.css">
+      <script type="module" src="{$urls.child_theme_assets}react-app/dist/assets/index-1eacf660.js"></script>
+
       <section class="login-form">
         {render file='customer/_partials/login-form.tpl' ui=$login_form}
       </section>
