@@ -29,6 +29,7 @@
 {/block}
 
 {block name='page_content'}
+{var_dump($urls)}
     {block name='login_form_container'}
       <p class="no-account"><strong>{l s='Login with demo account:' d='Shop.Theme.Customeraccount'}</strong><br><br>demo@demo.fr<br>demodemo</p>
       <section class="login-form">
@@ -44,5 +45,5 @@
         </a>
       </div>
     {/block}
-      <script type="text/javascript" src="{$theme_assets}js/custom-login.js"></script>
+    <script src="{$urls.child_js_url}/custom-login.js"></script>
 {/block}
