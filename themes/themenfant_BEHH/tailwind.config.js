@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './templates/**/*.tpl',    // Vos templates PrestaShop
-    './assets/js/**/*.js',     // Vos fichiers JS si vous utilisez du React
+    "./templates/**/*.tpl", // Vos templates PrestaShop
+    "./assets/js/**/*.js", // Vos fichiers JS si vous utilisez du React
   ],
   theme: {
     extend: {
@@ -16,14 +16,10 @@ module.exports = {
         3: "3px",
       },
       fontFamily: {
-        'adlam': ['"ADLaM Display"', 'sans-serif'], 
-        'poppins': ['Poppins', 'sans-serif'],
+        adlam: ['"ADLaM Display"', "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-
+  plugins: [],
+};
