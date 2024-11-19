@@ -50,8 +50,6 @@
 
   <section id="main">
     <meta content="{$product.url}">
-    {var_dump($product)}
-
     <div class="row product-container js-product-container">
       <div class="col-md-6">
         {block name='page_content_container'}
@@ -252,7 +250,7 @@
     {block name='page_footer_container'}
       <footer class="page-footer">
         {block name='page_footer'}
-          <!-- Footer content -->
+          <!-- Footer content-->
         {/block}
       </footer>
     {/block}

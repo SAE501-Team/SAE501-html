@@ -35,7 +35,7 @@
         {foreach from=$formFields item="field"}
           {block name='form_field'}
             <div class="form-group custom-form-group">
-              <label for="{$field.id}" class="text-red-500">{$field.label}</label>
+              <label for="{$field.id}" class="text-red-500 bg-be-rose">{$field.label}</label>
               <input type="{$field.type}" name="{$field.name}" class="form-control custom-input bg-white" value="{$field.value|escape:'html'}" required>
             </div>
           {/block}
