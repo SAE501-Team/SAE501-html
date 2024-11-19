@@ -41,7 +41,15 @@
   {/if}
 
   <link rel="stylesheet" href="{$urls.shop_domain_url}/themes/themenfant_BEHH/assets/css/tailwind.build.css">
-  
+  <link
+      href="https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
   {if $page.canonical}
     <link rel="canonical" href="{$page.canonical}">
   {/if}

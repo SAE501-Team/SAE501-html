@@ -1,5 +1,5 @@
 //test
-document.querySelector(".no-account").innerHTML="on voit ce texte ????????????";
+//document.querySelector(".no-account").innerHTML="on voit ce texte ????????????";
 /*
 code d'intégration
 <script src="{$urls.child_js_url}/custom-login.js"></script>
