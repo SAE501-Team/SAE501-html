@@ -26,10 +26,10 @@
 <div class="js-product product{if !empty($productClasses)} {$productClasses}{/if}">
   <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}">
     <div class="thumbnail-container">
-      <div class="thumbnail-top">
+      <div class="thumbnail-top border-3 border-black mb-4 sm:mb-7"><!-- une vigniette produit-->
         {block name='product_thumbnail'}
           {if $product.cover}
-            <a href="{$product.url}" class="thumbnail product-thumbnail">
+            <a href="{$product.url}" class="thumbnail product-thumbnail relative w-auto aspect-square overflow-hidden group">
               <picture>
                 {if !empty($product.cover.bySize.home_default.sources.avif)}<source srcset="{$product.cover.bySize.home_default.sources.avif}" type="image/avif">{/if}
                 {if !empty($product.cover.bySize.home_default.sources.webp)}<source srcset="{$product.cover.bySize.home_default.sources.webp}" type="image/webp">{/if}
@@ -40,8 +40,17 @@
                   data-full-size-image-url="{$product.cover.large.url}"
                   width="{$product.cover.bySize.home_default.width}"
                   height="{$product.cover.bySize.home_default.height}"
+                  class="w-full h-full object-cover transition ease-out duration-500 group-hover:blur"
                 />
               </picture>
+              <div
+                class="absolute inset-0 flex justify-center items-center opacity-0 transition-opacity ease-out duration-500 group-hover:opacity-100"
+              >
+                <div
+                  class="w-3/4 h-3/4 border-2 border-black shadow-[inset_-4px_5px_25.3px_14px_rgba(0,0,0,0.45)] bg-cover bg-center"
+                  style="background-image: url('{$urls.child_img_url}/bouleChocoCereal.webp')"
+                ></div>
+              </div>
             </a>
           {else}
             <a href="{$product.url}" class="thumbnail product-thumbnail">

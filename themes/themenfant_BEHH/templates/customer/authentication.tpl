@@ -30,6 +30,8 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
     >
       {l s='No account? Create one here' d='Shop.Theme.Customeraccount'}
     </a>
+
+    {var_dump($urls)}
   </div>
   {/block} {/block}
 </contact@prestashop.com>

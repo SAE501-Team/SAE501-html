@@ -29,7 +29,7 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
         <input
           type="{$field.type}"
           name="{$field.name}"
-          class="form-control !bg-white !border-3 !border-black transition ease-out duration-500 hover:scale-[0.98] focus:!border-be-bleu focus:!outline-none"
+          class="form-control !bg-white !border-3 !border-black transition ease-out duration-500 hover:scale-[0.99] focus:!border-be-bleu focus:!outline-none"
           value="{$field.value|escape:'html'}"
           required
         />
