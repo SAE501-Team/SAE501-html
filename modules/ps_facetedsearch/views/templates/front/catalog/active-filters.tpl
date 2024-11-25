@@ -16,9 +16,9 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
-<section id="js-active-search-filters" class="{if $activeFilters|count}active_filters{else}hide{/if}">
+<section id="js-active-search-filters" class="{if $activeFilters|count}active_filters{else}hide{/if} !bg-white border-3 border-black">
   {block name='active_filters_title'}
-    <p class="h6 {if $activeFilters|count}active-filter-title{else}hidden-xs-up{/if}">{l s='Active filters' d='Shop.Theme.Global'}</p>
+    <p class="h6 {if $activeFilters|count}active-filter-title{else}hidden-xs-up{/if} !text-black">{l s='Active filters' d='Shop.Theme.Global'} : </p>
   {/block}
 
   {if $activeFilters|count}
@@ -26,9 +26,10 @@
       {foreach from=$activeFilters item="filter"}
         {block name='active_filters_item'}
           <li class="filter-block">
-            {l s='%1$s:' d='Shop.Theme.Catalog' sprintf=[$filter.facetLabel]}
-            {$filter.label}
-            <a class="js-search-link" href="{$filter.nextEncodedFacetsURL}"><i class="material-icons close">&#xE5CD;</i></a>
+            <a class="js-search-link bg-gradient-to-tl from-be-rose to-be-bleu text-white text-[10px] rounded-[10px] font-adlam hover:scale-90" href="{$filter.nextEncodedFacetsURL}">
+              {$filter.label}
+              <i class="material-icons close nox !color-white">&#xE5CD;</i>
+            </a>
           </li>
         {/block}
       {/foreach}

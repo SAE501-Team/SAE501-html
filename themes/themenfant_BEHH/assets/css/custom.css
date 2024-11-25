@@ -1,1 +1,251 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: rgb(253, 200, 200);
+}
 
+#wrapper {
+  background-color: #f6e2e2;
+}
+
+/* réparation */
+
+.nox{
+    float:none;
+    color: #23232300 !important;
+    margin-top: -2px !important;
+}
+
+.filter-block {
+    padding: .325rem !important;
+    margin-right: 0 !important;
+    margin-bottom: .650rem !important;
+    animation: transform 0.6s ease-in-out;
+}
+
+.filter-block:hover {
+    transform: scale(0.95);
+}
+
+.filter-block .js-search-link{
+    padding: 8px;
+}
+
+
+/* les étoiles pas label */
+
+.rating .distar {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.5s ease;
+}
+
+.rating .distar .svgOne {
+  height: 33px;
+  width: 33px;
+  stroke: #ffd700; /* Couleur du contour */
+  transition: stroke 0.5s ease, fill 0.5s ease;
+}
+
+.rating .distar .svgTwo {
+  position: absolute;
+  top: 0px;
+  height: 30px;
+  width: 30px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.ombre {
+  background: radial-gradient(
+    ellipse closest-side,
+    rgba(0, 0, 0, 0.24),
+    rgba(0, 0, 0, 0)
+  );
+  width: 30px;
+  height: 8px;
+  opacity: 1;
+  margin-top: 34px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row; /* Pour inverser l'ordre et aligner dans le bon sens */
+  gap: 0.3rem;
+}
+
+/*   caddie  */
+
+.button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  position: relative;
+}
+
+.pops {
+  position: absolute;
+  top: 0px;
+  left: 12px;
+  background-color: #ffd700;
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  z-index: -1;
+}
+
+.chart {
+  height: 37px;
+  width: 37px;
+  z-index: 1;
+}
+
+.button:hover > div {
+  animation: chackChart 0.6s ease-out;
+}
+
+@keyframes chackChart {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  80% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(00deg);
+  }
+}
+
+button .pops {
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease-out 0.2s, opacity 0.1s ease-out 0.2s;
+}
+
+button:focus-within .chart {
+  fill: black;
+}
+
+@keyframes ChartJump {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: rotate(-14deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0deg);
+  }
+  75% {
+    transform: rotate(14deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+button:focus-within > div {
+  animation: ChartJump 0.6s ease-out;
+}
+
+button:focus-within .pops {
+  transform: translateY(0px);
+  opacity: 1;
+  transition: transform 0.4s ease-out 0.2s,
+    /* Delay à l'entrée de 0.2s pour transform */ opacity 0.2s ease-out 0.3s; /* Delay à l'entrée de 0.2s pour opacity */
+}
+
+/* Si le bouton perd le focus (retour à l'état initial) */
+button:not(:focus-within) .pops {
+  transition: transform 0.3s ease-out,
+    /* Pas de délai à la sortie */ opacity 0.1s ease-out; /* Pas de délai à la sortie */
+}
+
+/* checkbox  */
+
+.checkbox-b {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-b__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Label styling */
+.checkbox-b__label {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Space between box and text */
+  font-size: 15px;
+  color: #000000;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Custom checkbox design */
+.checkbox-b__custom {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #000000;
+  border-radius: 0%; /* Keep square; use 50% for circles */
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.checkbox-b__custom-fill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 8px; /* Rounded filling */
+  background: linear-gradient(
+    0deg,
+    rgba(0, 230, 118, 1) 0%,
+    rgba(255, 215, 0, 1) 100%
+  );
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+/* When checkbox is checked */
+.checkbox-b__input:checked + .checkbox-b__label .checkbox-b__custom-fill {
+  width: 100%;
+  height: 100%;
+}
+
+.checkbox-b__input:checked + .checkbox-b__label .checkbox-b__custom {
+  border: none; /* Remove border when checked */
+}
+
+/* Hover effect */
+.checkbox-b__input:hover + .checkbox-b__label .checkbox-b__custom {
+  transform: scale(0.85);
+}
+
+/* Text styling */
+.checkbox-b__text {
+  font-size: 14px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.checkbox-b__text span {
+  font-size: 12px;
+}

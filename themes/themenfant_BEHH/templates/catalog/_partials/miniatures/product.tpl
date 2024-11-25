@@ -23,10 +23,10 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 {block name='product_miniature_item'}
-<div class="js-product product{if !empty($productClasses)} {$productClasses}{/if}">
-  <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}">
+<div class="js-product product{if !empty($productClasses)} {$productClasses}{/if} ">
+  <article class="product-miniature js-product-miniature " data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}">
     <div class="thumbnail-container">
-      <div class="thumbnail-top border-3 border-black mb-4 sm:mb-7"><!-- une vigniette produit-->
+      <div class="thumbnail-top border-3 border-black mb-4"><!-- une vigniette produit-->
         {block name='product_thumbnail'}
           {if $product.cover}
             <a href="{$product.url}" class="thumbnail product-thumbnail relative w-auto aspect-square overflow-hidden group">
@@ -40,17 +40,21 @@
                   data-full-size-image-url="{$product.cover.large.url}"
                   width="{$product.cover.bySize.home_default.width}"
                   height="{$product.cover.bySize.home_default.height}"
-                  class="w-full h-full object-cover transition ease-out duration-500 group-hover:blur"
+                  class="w-full h-full object-cover {if $product.images|@count > 1} transition ease-out duration-500 group-hover:blur{/if}"
                 />
               </picture>
-              <div
-                class="absolute inset-0 flex justify-center items-center opacity-0 transition-opacity ease-out duration-500 group-hover:opacity-100"
-              >
+              {if $product.images|@count > 1} <!-- Vérifie qu'il y a plus d'une image -->
+                {assign var="second_image" value=$product.images[1]} <!-- Récupère la deuxième image (index 1) -->
+
                 <div
-                  class="w-3/4 h-3/4 border-2 border-black shadow-[inset_-4px_5px_25.3px_14px_rgba(0,0,0,0.45)] bg-cover bg-center"
-                  style="background-image: url('{$urls.child_img_url}/bouleChocoCereal.webp')"
-                ></div>
-              </div>
+                  class="absolute inset-0 flex justify-center items-center opacity-0 transition-opacity ease-out duration-500 group-hover:opacity-100"
+                >
+                  <div
+                    class="w-3/4 h-3/4 border-2 border-black shadow-[inset_-4px_5px_25.3px_14px_rgba(0,0,0,0.45)] bg-cover bg-center"
+                    style="background-image: url('{$second_image.bySize.home_default.url}')"
+                  ></div>
+                </div>
+              {/if}
             </a>
           {else}
             <a href="{$product.url}" class="thumbnail product-thumbnail">
@@ -68,10 +72,10 @@
           {/if}
         {/block}
 
-        <div class="highlighted-informations{if !$product.main_variants} no-variants{/if}">
+        <div class="highlighted-informations{if !$product.main_variants} no-variants{/if}  border-t-3 border-black">
           {block name='quick_view'}
-            <a class="quick-view js-quick-view" href="#" data-link-action="quickview">
-              <i class="material-icons search">&#xE8B6;</i> {l s='Quick view' d='Shop.Theme.Actions'}
+            <a class="quick-view js-quick-view !text-black group transition ease-out duration-500 hover:!text-slate-500" href="#" data-link-action="quickview">
+              <i class="material-icons search transition ease-out duration-500 group-hover:rotate-90">&#xE8B6;</i>{l s='Quick view' d='Shop.Theme.Actions'}
             </a>
           {/block}
 
@@ -83,23 +87,72 @@
         </div>
       </div>
 
-      <div class="product-description">
+      <div class="product-description font-adlam !text-black flex justify-between flex-col">
+        <div class="flex gap-2 items-center">
+          <!-- Étoile/avis -->
+          <div class="rating">
+            les étoiles
+          </div>
+          <!-- Nombre d'avis -->
+          <div>23 avis</div>
+        </div>
         {block name='product_name'}
           {if $page.page_name == 'index'}
-            <h3 class="h3 product-title"><a href="{$product.url}" content="{$product.url}">{$product.name|truncate:30:'...'}</a></h3>
+            <h3 class="h3 product-title text-lg !text-left">{$product.name|truncate:30:'...'}</h3>
           {else}
-            <h2 class="h3 product-title"><a href="{$product.url}" content="{$product.url}">{$product.name|truncate:30:'...'}</a></h2>
+            <h2 class="h3 product-title text-lg !text-left">{$product.name|truncate:30:'...'}</h2>
           {/if}
         {/block}
 
+        <div>
+          <div
+            class="flex gap-1 items-end justify-between"
+          >
+            <!-- Infos -->
+            <div>
+              {if isset($product.features)}
+                {assign var="compositions" value=[]}
+                
+                {foreach from=$product.features item=feature}
+                  {if $feature.name == "Composition"} 
+                    {assign var="compositions" value=$compositions|@array_merge:[$feature.value]}
+                  {/if}
+                {/foreach}
+                
+                {if $compositions|@count > 0}
+                  <div>Goûts : 
+                    {foreach from=$compositions item=value key=index}
+                      {if $index == $compositions|@count - 1 && $index > 0} et {/if}
+                      {$value}{if $index < $compositions|@count - 2}, {/if}
+                    {/foreach}
+                  </div>
+                {/if}
 
-        {block name='product_price_and_shipping'}
+                <!-- Gestion des Propriétés -->
+                {assign var="proprietes" value=[]}
+                {foreach from=$product.features item=feature}
+                  {if $feature.name == "Propriété"} 
+                    {assign var="proprietes" value=$proprietes|@array_merge:[$feature.value]}
+                  {/if}
+                {/foreach}
+                
+                {if $proprietes|@count > 0}
+                  <div>Forme : 
+                    {foreach from=$proprietes item=value key=index}
+                      {if $index == $proprietes|@count - 1 && $index > 0} et {/if}
+                      {$value}{if $index < $proprietes|@count - 2}, {/if}
+                    {/foreach}
+                  </div>
+                {/if}
+              {/if}
+            </div>
+            {block name='product_price_and_shipping'}
           {if $product.show_price}
-            <div class="product-price-and-shipping">
+            <div class="product-price-and-shipping !text-be-rose text-lg ">
               {if $product.has_discount}
                 {hook h='displayProductPriceBlock' product=$product type="old_price"}
 
-                <span class="regular-price" aria-label="{l s='Regular price' d='Shop.Theme.Catalog'}">{$product.regular_price}</span>
+                <span class="regular-price !text-be-rose/45" aria-label="{l s='Regular price' d='Shop.Theme.Catalog'}">{$product.regular_price}</span>
                 {if $product.discount_type === 'percentage'}
                   <span class="discount-percentage discount-product">{$product.discount_percentage}</span>
                 {elseif $product.discount_type === 'amount'}
@@ -124,6 +177,50 @@
             </div>
           {/if}
         {/block}
+          </div>
+          <div class="flex items-end gap-4 mt-2 justify-around">
+            <a href="{$product.url}" content="{$product.url}"
+              class="bg-be-jaune text-white !py-1 !px-4 !rounded border-3 border-be-jaune transition-all ease-out duration-500 hover:bg-transparent hover:!text-be-jaune"
+            >
+              Voir
+          </a>
+            <button id="myButton" class="button !outline-none">
+              <div>
+                <div class="pops"></div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 29 29"
+                  height="29"
+                  width="29"
+                  class="chart"
+                >
+                  <path
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="3.33333"
+                    stroke="black"
+                    d="M12.0833 25.9792C12.7507 25.9792 13.2917 25.4382 13.2917 24.7708C13.2917 24.1035 12.7507 23.5625 12.0833 23.5625C11.416 23.5625 10.875 24.1035 10.875 24.7708C10.875 25.4382 11.416 25.9792 12.0833 25.9792Z"
+                  ></path>
+                  <path
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="3.33333"
+                    stroke="black"
+                    d="M21.7498 25.9792C22.4172 25.9792 22.9582 25.4382 22.9582 24.7708C22.9582 24.1035 22.4172 23.5625 21.7498 23.5625C21.0825 23.5625 20.5415 24.1035 20.5415 24.7708C20.5415 25.4382 21.0825 25.9792 21.7498 25.9792Z"
+                  ></path>
+                  <path
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="3.33333"
+                    stroke="black"
+                    d="M3.021 3.02075H6.646L9.9085 18.0041C10.0215 18.5582 10.3252 19.0551 10.7668 19.4083C11.2083 19.7616 11.7598 19.9488 12.3252 19.9374H21.6293C22.1947 19.9488 22.7462 19.7616 23.1877 19.4083C23.6293 19.0551 23.933 18.5582 24.046 18.0041L25.9793 7.85408H8.57933"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
 
         {block name='product_reviews'}
           {hook h='displayProductListReviews' product=$product}

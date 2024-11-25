@@ -22,10 +22,10 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
-
-{* Javascript is used to display each product grade, this allows every rating to be udpated as soon as they change *}
-
-<div class="product-list-reviews" data-id="{$product.id}" data-url="{$product_comment_grade_url nofilter}">
-  <div class="grade-stars small-stars rating"></div>
-  <div class="comments-nb"></div>
-</div>
+{block name='product_flags'}
+    <ul class="product-flags js-product-flags">
+        {foreach from=$product.flags item=flag}
+            <li class="product-flag {$flag.type}">{$flag.label}</li>
+        {/foreach}
+    </ul>
+{/block}

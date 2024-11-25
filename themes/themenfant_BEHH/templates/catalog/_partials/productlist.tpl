@@ -23,9 +23,11 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 
-{* Javascript is used to display each product grade, this allows every rating to be udpated as soon as they change *}
+{capture assign="productClasses"}col-xs-12 col-sm-6 col-lg-4{/capture}
 
-<div class="product-list-reviews" data-id="{$product.id}" data-url="{$product_comment_grade_url nofilter}">
-  <div class="grade-stars small-stars rating"></div>
-  <div class="comments-nb"></div>
+<div class="products{if !empty($cssClass)} {$cssClass}{/if} text-xs sm:text-sm ">
+    {foreach from=$products item="product" key="position"}
+        {include file="catalog/_partials/miniatures/product.tpl" product=$product position=$position productClasses=$productClasses}
+    {/foreach}
 </div>
+
