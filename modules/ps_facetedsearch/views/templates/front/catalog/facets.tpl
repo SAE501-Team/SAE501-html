@@ -25,7 +25,7 @@
     {block name='facets_clearall_button'}
       {if $activeFilters|count}
         <div id="_desktop_search_filters_clear_all" class="hidden-sm-down clear-all-wrapper">
-          <button data-search-url="{$clear_all_link}" class="btn btn-tertiary js-search-filters-clear-all">
+          <button data-search-url="{$clear_all_link}" class="js-search-filters-clear-all bg-gradient-to-tl from-be-rose to-be-bleu text-white text-[10px] rounded-[10px] font-adlam hover:scale-90">
             <i class="material-icons">&#xE14C;</i>
             {l s='Clear all' d='Shop.Theme.Actions'}
           </button>

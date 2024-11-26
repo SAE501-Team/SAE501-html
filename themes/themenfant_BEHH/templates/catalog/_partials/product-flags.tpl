@@ -24,8 +24,14 @@
  *}
 {block name='product_flags'}
     <ul class="product-flags js-product-flags">
+      
         {foreach from=$product.flags item=flag}
-            <li class="product-flag {$flag.type}">{$flag.label}</li>
+            <li class="product-flag {$flag.type}">{$flag.label} : {var_dump($flag)}</li>
+            <div
+            class="text-white bg-gradient-to-b from-be-jaune to-be-vert border-3 border-white absolute z-10 h-[56px] w-[56px] sm:h-[71px] sm:w-[71px] flex items-center justify-center text-[9px] sm:text-[10px] rounded-full rotate-[-25deg] bottom-[-22px] sm:bottom-[-30px] pl-[6px] sm:pl-[12px] leading-3 right-[4px]"
+          >
+            Melange Magique
+          </div>
         {/foreach}
     </ul>
 {/block}

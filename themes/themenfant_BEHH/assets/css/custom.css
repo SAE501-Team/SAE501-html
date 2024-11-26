@@ -30,6 +30,25 @@ body {
     padding: 8px;
 }
 
+.hidden-sm-down .js-search-filters-clear-all{
+    padding: 8px;
+}
+
+.ui-slider .ui-slider-range, .ui-slider .ui-slider-handle{
+    background: linear-gradient(to top left, #FF4081, #7BAAF7) !important;
+    border: none !important;
+}
+
+.ui-slider .ui-slider-handle{
+    width: 12px !important;
+}
+
+.faceted-slider p{
+    text-align: center;
+    font-size: 14px;
+    color: #000000;
+}
+
 
 /* les étoiles pas label */
 
