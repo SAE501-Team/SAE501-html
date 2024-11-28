@@ -19,7 +19,7 @@
 {if $displayedFacets|count}
   <div id="search_filters" class="border-3 border-black">
     {block name='facets_title'}
-      <p class="text-uppercase h6 hidden-sm-down">{l s='Filter By' d='Shop.Theme.Actions'}</p>
+      <p class="text-uppercase h6 hidden-sm-down font-adlam border-3 border-black text-center">{l s='Filter By' d='Shop.Theme.Actions'}</p>
     {/block}
 
     {block name='facets_clearall_button'}

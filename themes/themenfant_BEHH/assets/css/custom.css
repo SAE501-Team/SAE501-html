@@ -49,6 +49,34 @@ body {
     color: #000000;
 }
 
+.majuscule{
+  text-transform: uppercase;
+}
+
+li .subcategory-name{
+  padding: 10px;
+}
+
+li .subcategory-name:hover h5{
+  color: white;
+}
+
+/* Change la couleur de fond des boutons primary */
+.btn-primary {
+  background-color: #7BAAF7; /* Remplacez par la couleur de votre choix */
+  border-color: #7BAAF7; /* Ajustez la couleur de bordure si nécessaire */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Facultatif : Changer la couleur au survol */
+.btn-primary:hover {
+  background-color: #619bf9; /* Couleur au survol */
+  border-color: #619bf9; /* Bordure au survol */
+}
+
+.product-flags li.product-flag{
+  background-color: #619bf9;
+}
 
 /* les étoiles pas label */
 
@@ -99,14 +127,14 @@ body {
 
 /*   caddie  */
 
-.button {
+.product-description .button {
   cursor: pointer;
   border: none;
   background: none;
   position: relative;
 }
 
-.pops {
+.product-description .pops {
   position: absolute;
   top: 0px;
   left: 12px;
@@ -117,13 +145,13 @@ body {
   z-index: -1;
 }
 
-.chart {
+.product-description .chart {
   height: 37px;
   width: 37px;
   z-index: 1;
 }
 
-.button:hover > div {
+.product-description .button:hover > div {
   animation: chackChart 0.6s ease-out;
 }
 
@@ -145,13 +173,13 @@ body {
   }
 }
 
-button .pops {
+.product-description button .pops {
   transform: translateY(-20px);
   opacity: 0;
   transition: transform 0.3s ease-out 0.2s, opacity 0.1s ease-out 0.2s;
 }
 
-button:focus-within .chart {
+.product-description button:focus-within .chart {
   fill: black;
 }
 
@@ -173,11 +201,11 @@ button:focus-within .chart {
   }
 }
 
-button:focus-within > div {
+.product-description button:focus-within > div {
   animation: ChartJump 0.6s ease-out;
 }
 
-button:focus-within .pops {
+.product-description button:focus-within .pops {
   transform: translateY(0px);
   opacity: 1;
   transition: transform 0.4s ease-out 0.2s,
@@ -185,7 +213,7 @@ button:focus-within .pops {
 }
 
 /* Si le bouton perd le focus (retour à l'état initial) */
-button:not(:focus-within) .pops {
+.product-description button:not(:focus-within) .pops {
   transition: transform 0.3s ease-out,
     /* Pas de délai à la sortie */ opacity 0.1s ease-out; /* Pas de délai à la sortie */
 }
@@ -267,4 +295,99 @@ button:not(:focus-within) .pops {
 
 .checkbox-b__text span {
   font-size: 12px;
+}
+
+
+
+/* Container styling */
+.heart-container {
+  --heart-color: rgb(255, 64, 129);
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.wishlist-button-add:hover .heart-container {
+  transform: scale(1.1);
+}
+
+/* SVG container */
+.svg-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Outline heart */
+.svg-outline {
+  fill: black;
+  transition: fill 0.3s;
+}
+
+/* Filled heart */
+.svg-filled {
+  position: absolute;
+  fill: var(--heart-color);
+  transform: scale(0);
+  animation: keyframes-svg-filled 0.5s forwards;
+  display: none;
+}
+
+.wishlist-button-add.liked .svg-filled {
+  display: block;
+}
+
+/* Celebrate sparks */
+.svg-celebrate {
+  position: absolute;
+  stroke: var(--heart-color);
+  fill: var(--heart-color);
+  stroke-width: 2px;
+  transform: scale(0);
+  opacity: 0;
+  animation: keyframes-svg-celebrate 0.5s forwards;
+  display: none;
+}
+
+.wishlist-button-add.liked .svg-celebrate {
+  display: block;
+}
+
+/* Animations */
+@keyframes keyframes-svg-filled {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes keyframes-svg-celebrate {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.wishlist-button-add {
+  background-color:#00000000 !important;
+  box-shadow:none !important;
 }

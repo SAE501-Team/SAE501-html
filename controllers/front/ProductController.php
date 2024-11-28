@@ -458,6 +458,23 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
                 'product_brand_url' => $productBrandUrl,
             ]);
 
+            // Récupérer les catégories du produit
+            $productCategories = $this->product->getCategories();
+
+            // Optionnel : récupérer les noms des catégories
+            $categories = [];
+            foreach ($productCategories as $id_category) {
+                $category = new Category($id_category, $this->context->language->id);
+                $categories[] = [
+                    'id' => $id_category,
+                    'name' => $category->name,
+                    'link' => $this->context->link->getCategoryLink($id_category),
+                ];
+            }
+
+            // Transmettre les catégories au template
+            $this->context->smarty->assign('product_categories', $categories);
+
             // Assign attribute groups to the template
             $this->assignAttributesGroups($product_for_template);
         }
