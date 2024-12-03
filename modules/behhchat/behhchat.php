@@ -24,7 +24,8 @@ class BehhChat extends Module
         return parent::install() && 
                $this->registerHook('actionCustomerAccountAdd') && 
                $this->registerHook('actionAuthentication') &&
-               $this->registerHook('actionCustomerLogoutAfter');
+               $this->registerHook('actionCustomerLogoutAfter') &&
+               $this->registerHook('ModuleRoutes');
     }
     
     public function uninstall()
