@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Ajoute le contenu HTML dans chaque élément
     wishlistButtons.forEach((button) => {
-      button.innerHTML = heartContainerHTML;
+      //button.innerHTML = heartContainerHTML;
       button.addEventListener("click", () => {
         button.classList.toggle("liked");
       });
