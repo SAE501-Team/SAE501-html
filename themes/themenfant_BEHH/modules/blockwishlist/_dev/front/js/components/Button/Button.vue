@@ -267,7 +267,9 @@
     display: none;
   }
 
-  .wishlist-button-add>.likedp .svg-filled {
+  .wishlist-button-add.likedp .svg-celebrate,
+  .wishlist-button-add.likedp .svg-filled
+  {
     display: block;
   }
 
@@ -283,8 +285,8 @@
     display: none;
   }
 
-  .wishlist-button-add>.likedp .svg-celebrate {
-    display: block;
+  .wishlist-button-add:focus {
+	outline: none !important;
   }
 
   /* Animations */
