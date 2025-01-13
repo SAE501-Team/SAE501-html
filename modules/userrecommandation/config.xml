@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>userrecommandation</name>
+	<displayName><![CDATA[Outil de recommandation BEHH]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Ce module, va permettre de stoker dans la base de données des information concernant les préférences de consommation des utilisateur, pour leur fournir une recommandation de produits pertinente.]]></description>
+	<author><![CDATA[BEHH]]></author>
+	<tab><![CDATA[others]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>

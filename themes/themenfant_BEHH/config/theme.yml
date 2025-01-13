@@ -13,15 +13,10 @@ assets:
       - id: custom-js
         path: assets/js/custom.js
         priority: 100
-      - id: react-script
-        path: assets/react-app/dist/assets/index-1eacf660.js
-        attribute: type="module"
 
   css:
     all:
       - id: custom-styles
         path: assets/css/custom.css
-      - id: react-style
-        path: assets/react-app/dist/assets/index-7309e5d8.css
       - id: tailwind-styles
         path: assets/css/tailwind.build.css

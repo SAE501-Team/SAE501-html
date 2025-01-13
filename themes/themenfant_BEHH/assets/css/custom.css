@@ -125,34 +125,51 @@ li .subcategory-name:hover h5{
   gap: 0.3rem;
 }
 
-/*   caddie  */
 
-.product-description .button {
+
+/* Caddie */
+
+.product-description .quick-view {
   cursor: pointer;
-  border: none;
-  background: none;
   position: relative;
 }
 
-.product-description .pops {
-  position: absolute;
-  top: 0px;
-  left: 12px;
+.product-description .quick-view .pops {
   background-color: #ffd700;
   border-radius: 100%;
   height: 20px;
   width: 20px;
   z-index: -1;
+  opacity: 0;
+  transform: translate(12px, 0px);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Transition pour l'apparition */
 }
 
-.product-description .chart {
+/* La "boule" reste visible si la classe incart est présente */
+.product-description .quick-view.incart .pops {
+  transform: translate(12px, 19px);
+  opacity: 1;
+}
+
+.product-description .quick-view.incart .pops {
+  opacity: 1;
+}
+
+.product-description .quick-view .chart {
   height: 37px;
   width: 37px;
   z-index: 1;
+  transform: translateY(0px) rotate(0deg);
 }
 
-.product-description .button:hover > div {
-  animation: chackChart 0.6s ease-out;
+
+.product-description .quick-view > div{
+  transform-origin: center 38px;
+}
+
+/* Animation au hover */
+.product-description .quick-view:hover > div{
+  animation: chackChart 0.6s ease-out; /* Animation uniquement au hover */
 }
 
 @keyframes chackChart {
@@ -169,18 +186,18 @@ li .subcategory-name:hover h5{
     transform: rotate(-20deg);
   }
   100% {
-    transform: rotate(00deg);
+    transform: rotate(0deg);
   }
 }
 
-.product-description button .pops {
-  transform: translateY(-20px);
-  opacity: 0;
-  transition: transform 0.3s ease-out 0.2s, opacity 0.1s ease-out 0.2s;
+/* Style spécifique pour les éléments déjà dans le panier */
+.product-description .quick-view.incart .chart {
+  fill: black; /* Changement de couleur pour les éléments incart */
 }
 
-.product-description button:focus-within .chart {
-  fill: black;
+/* Animation au chargement uniquement si incart */
+.product-description .incart > div {
+  animation: ChartJump 0.6s ease-out forwards;
 }
 
 @keyframes ChartJump {
@@ -201,22 +218,10 @@ li .subcategory-name:hover h5{
   }
 }
 
-.product-description button:focus-within > div {
-  animation: ChartJump 0.6s ease-out;
-}
 
-.product-description button:focus-within .pops {
-  transform: translateY(0px);
-  opacity: 1;
-  transition: transform 0.4s ease-out 0.2s,
-    /* Delay à l'entrée de 0.2s pour transform */ opacity 0.2s ease-out 0.3s; /* Delay à l'entrée de 0.2s pour opacity */
-}
 
-/* Si le bouton perd le focus (retour à l'état initial) */
-.product-description button:not(:focus-within) .pops {
-  transition: transform 0.3s ease-out,
-    /* Pas de délai à la sortie */ opacity 0.1s ease-out; /* Pas de délai à la sortie */
-}
+
+
 
 /* checkbox  */
 
@@ -302,4 +307,24 @@ li .subcategory-name:hover h5{
 .wishlist-button-add {
   background-color:#00000000 !important;
   box-shadow:none !important;
+}
+
+/* style de la vue rapide */
+
+.product-images>li.thumb-container .thumb.selected, .product-images>li.thumb-container .thumb:hover {
+  border: #000000 3px solid;
+}
+
+.bootstrap-touchspin .btn-touchspin {
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.product-actions .add-to-cart .material-icons {
+  line-height: normal;
+}
+
+.bootstrap-touchspin input.form-control, .bootstrap-touchspin input.input-group {
+  width: 42px;
+  border: 2px solid black;
+  border-right: 1px solid black;
 }

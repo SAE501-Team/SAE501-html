@@ -1,0 +1,5 @@
+user_choix_page:
+    path: /choix-utilisateur
+    defaults:
+        _controller: 'Module\\UserChoixControleur'
+        _legacy_controller: 'module-userchoixcontroleur'

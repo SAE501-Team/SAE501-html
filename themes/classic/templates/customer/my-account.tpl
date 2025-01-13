@@ -29,7 +29,7 @@
 {/block}
 
 {block name='page_content'}
-  <div class="row">
+  <div class="row">{hook h='displayCustomerForm'}
     <div class="links">
 
       <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link" href="{$urls.pages.identity}">

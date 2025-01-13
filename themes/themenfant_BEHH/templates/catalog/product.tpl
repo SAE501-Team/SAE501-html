@@ -60,6 +60,42 @@
               {block name='product_cover_thumbnails'}
                 {include file='catalog/_partials/product-cover-thumbnails.tpl'}
               {/block}
+              {block name='product_flags'}
+                {assign var="positions" value=["right-0", "right-[63px]", "right-[125px]"]}
+
+                <div class="font-adlam h-[32px] text-white">
+                  {foreach from=$product_categories item=categorie} {if $categorie.name
+                  == "Mélange Magique" || $categorie.name == "Magic Blend"}
+                    {assign var="currentPosition" value=$positions|@array_shift}
+                    <div
+                      class="{$currentPosition} mt-[-27px] bg-gradient-to-b from-be-jaune to-be-vert border-3 border-white absolute z-10 h-[71px] w-[71px] flex items-center justify-center text-[11px] rounded-full rotate-[-25deg] pl-[10px] leading-3  bottom-12"
+                    >
+                      {$categorie.name}
+                    </div>
+                  {/if} {/foreach} {foreach from=$product.flags item=flag} {if
+                  $flag.label == "Nouveau" || $flag.label == "New"}
+                    {assign var="currentPosition" value=$positions|@array_shift}
+                    <div
+                      class="{$currentPosition} mt-[-27px] majuscule bg-gradient-to-b from-be-bleu to-be-rose border-3 border-white absolute z-10 h-[71px] w-[71px] flex items-center justify-center text-[10px] rounded-full rotate-[-25deg] bottom-12"
+                    >
+                      {$flag.label}
+                    </div>
+                  {/if} 
+                  {/foreach}
+                  {if isset($product.productComments) && $product.productComments.nbComments >= 1 && $product.productComments.averageRating >= 4}
+                      {assign var="currentPosition" value=$positions|@array_shift}
+                      <div
+                        class="{$currentPosition} mt-[-27px] majuscule bg-gradient-to-b from-be-jaune to-be-rose border-3 border-white absolute z-10 h-[71px] w-[71px] flex items-center justify-center text-[10px] rounded-full rotate-[-25deg] bottom-12"
+                      >
+                      {if $language.iso_code == 'fr'}
+                        Populaire
+                      {else}
+                        Popular
+                      {/if}
+                      </div>
+                    {/if}
+                </div>
+              {/block}
               <div class="scroll-box-arrows">
                 <i class="material-icons left">&#xE314;</i>
                 <i class="material-icons right">&#xE315;</i>
@@ -74,6 +110,7 @@
             {block name='page_header'}
               <h1 class="h1">{block name='page_title'}{$product.name}{/block}</h1>
             {/block}
+              
           {/block}
           {block name='product_prices'}
             {include file='catalog/_partials/product-prices.tpl'}
