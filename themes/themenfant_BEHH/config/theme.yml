@@ -1,0 +1,22 @@
+parent: classic
+name: themenfant_BEHH
+display_name: "BEHH theme"
+version: 1.0.0
+author:
+  name: "BEHH"
+  email: "cereal-behh@behh.com"
+
+assets:
+  use_parent_assets: true
+  js:
+    all:
+      - id: custom-js
+        path: assets/js/custom.js
+        priority: 100
+
+  css:
+    all:
+      - id: custom-styles
+        path: assets/css/custom.css
+      - id: tailwind-styles
+        path: assets/css/tailwind.build.css

@@ -17,15 +17,15 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 {if $displayedFacets|count}
-  <div id="search_filters">
+  <div id="search_filters" class="border-3 border-black">
     {block name='facets_title'}
-      <p class="text-uppercase h6 hidden-sm-down">{l s='Filter By' d='Shop.Theme.Actions'}</p>
+      <p class="text-uppercase h6 hidden-sm-down font-adlam border-3 border-black text-center">{l s='Filter By' d='Shop.Theme.Actions'}</p>
     {/block}
 
     {block name='facets_clearall_button'}
       {if $activeFilters|count}
         <div id="_desktop_search_filters_clear_all" class="hidden-sm-down clear-all-wrapper">
-          <button data-search-url="{$clear_all_link}" class="btn btn-tertiary js-search-filters-clear-all">
+          <button data-search-url="{$clear_all_link}" class="js-search-filters-clear-all bg-gradient-to-tl from-be-rose to-be-bleu text-white text-[10px] rounded-[10px] font-adlam hover:scale-90">
             <i class="material-icons">&#xE14C;</i>
             {l s='Clear all' d='Shop.Theme.Actions'}
           </button>
@@ -60,46 +60,32 @@
 
                 <li>
                   <label class="facet-label{if $filter.active} active {/if}" for="facet_input_{$_expand_id}_{$filter_key}">
-                    {if $facet.multipleSelectionAllowed}
-                      <span class="custom-checkbox">
-                        <input
-                          id="facet_input_{$_expand_id}_{$filter_key}"
-                          data-search-url="{$filter.nextEncodedFacetsURL}"
-                          type="checkbox"
-                          {if $filter.active }checked{/if}
-                        >
+                    <div class="checkbox-b">
+                      <input 
+                        id="facet_input_{$_expand_id}_{$filter_key}" 
+                        class="checkbox-b__input" 
+                        data-search-url="{$filter.nextEncodedFacetsURL}" 
+                        type="checkbox" 
+                        {if $filter.active}checked{/if} 
+                      />
+                      <label for="facet_input_{$_expand_id}_{$filter_key}" class="checkbox-b__label">
                         {if isset($filter.properties.color)}
+                          <!-- Afficher la couleur de fond -->
                           <span class="color" style="background-color:{$filter.properties.color}"></span>
                         {elseif isset($filter.properties.texture)}
+                          <!-- Afficher l'image de texture comme fond -->
                           <span class="color texture" style="background-image:url({$filter.properties.texture})"></span>
                         {else}
-                          <span {if !$js_enabled} class="ps-shown-by-js" {/if}><i class="material-icons rtl-no-flip checkbox-checked">&#xE5CA;</i></span>
+                          <!-- Si aucune couleur ou texture, afficher une coche ou autre icône -->
+                          <div class="checkbox-b__custom">
+                            <span class="checkbox-b__custom-fill"></span>
+                          </div>
                         {/if}
-                      </span>
-                    {else}
-                      <span class="custom-radio">
-                        <input
-                          id="facet_input_{$_expand_id}_{$filter_key}"
-                          data-search-url="{$filter.nextEncodedFacetsURL}"
-                          type="radio"
-                          name="filter {$facet.label}"
-                          {if $filter.active }checked{/if}
-                        >
-                        <span {if !$js_enabled} class="ps-shown-by-js" {/if}></span>
-                      </span>
-                    {/if}
-
-                    <a
-                      href="{$filter.nextEncodedFacetsURL}"
-                      class="_gray-darker search-link js-search-link"
-                      rel="nofollow"
-                    >
-                      {$filter.label}
-                      {if $filter.magnitude and $show_quantities}
-                        <span class="magnitude">({$filter.magnitude})</span>
-                      {/if}
-                    </a>
-                  </label>
+                        
+                        <span class="checkbox-b__text">{$filter.label}{if $filter.magnitude and $show_quantities} <span>({$filter.magnitude})</span>{/if}</span>
+                      </label>
+                    </div>
+                  </label>                  
                 </li>
               {/foreach}
             </ul>

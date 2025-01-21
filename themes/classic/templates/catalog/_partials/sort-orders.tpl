@@ -23,10 +23,10 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 
-<span class="col-sm-3 col-md-5 hidden-sm-down sort-by">{l s='Sort by:' d='Shop.Theme.Global'}</span>
+<span class="col-sm-3 col-md-5 hidden-sm-down sort-by text-black">{l s='Sort by:' d='Shop.Theme.Global'}</span>
 <div class="{if !empty($listing.rendered_facets)}col-xs-8 col-sm-7{else}col-xs-12 col-sm-12{/if} col-md-9 products-sort-order dropdown">
   <button
-    class="btn-unstyle select-title"
+    class="btn-unstyle select-title text-black"
     rel="nofollow"
     data-toggle="dropdown"
     aria-label="{l s='Sort by selection' d='Shop.Theme.Global'}"
@@ -42,7 +42,7 @@
         href="{$sort_order.url}"
         class="select-list {['current' => $sort_order.current, 'js-search-link' => true]|classnames}"
       >
-        {$sort_order.label}
+        {$sort_order.label} yo
       </a>
     {/foreach}
   </div>
