@@ -22,37 +22,39 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
-{extends file=$layout}
+{block name='customer_form'}
+  {block name='customer_form_errors'}
+    {include file='_partials/form-errors.tpl' errors=$errors['']}
+  {/block}
 
-{block name='content'}
+<form action="{block name='customer_form_actionurl'}{$action}{/block}" id="customer-form" class="js-customer-form" method="post">
+  <div>
+    {block "form_fields"}
+      {foreach from=$formFields item="field"}
+        {block "form_field"}
+          {if $field.type === "password"}
+            <div class="field-password-policy"> 
+              {form_field field=$field}
+            </div>
+          {else}
+            {form_field field=$field}
+          {/if}
+        {/block}
+      {/foreach}
+      {$hook_create_account_form nofilter}
+    {/block}
+  </div>
 
-  <section id="main" class="font-poppins">
-
-    {block name='page_header_container'}
-      {block name='page_title' hide}
-        <header class="page-header">
-          <h1 class="titrePage">{$smarty.block.child}</h1>
-        </header>
+  {block name='customer_form_footer'}
+    <footer class="form-footer clearfix"> 
+      <input type="hidden" name="submitCreate" value="1">
+      {block "form_buttons"}
+        <button class="btn btn-primary form-control-submit float-xs-right" data-link-action="save-customer" type="submit">
+          {l s='Save' d='Shop.Theme.Actions'}
+        </button>
       {/block}
-    {/block}
+    </footer>
+  {/block}
 
-    {block name='page_content_container'}
-      <div id="content" class="page-content card card-block">
-        {block name='page_content_top'}{/block}
-        {block name='page_content'}
-          <!-- Page content -->
-        {/block}
-      </div>
-    {/block}
-
-    {block name='page_footer_container'}
-      <footer class="page-footer">
-        {block name='page_footer'}
-          <!-- Footer content -->
-        {/block}
-      </footer>
-    {/block}
-
-  </section>
-
+</form>
 {/block}

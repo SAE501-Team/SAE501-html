@@ -19,7 +19,7 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
   <section class="login-form">
     {render file='customer/_partials/login-form.tpl' ui=$login_form}
   </section>
-  <hr class="border-black" />
+  <hr class="border-black my-1" />
   {block name='display_after_login_form'} {hook
   h='displayCustomerLoginFormAfter'} {/block}
   <div class="no-account">
@@ -31,7 +31,6 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
       {l s='No account? Create one here' d='Shop.Theme.Customeraccount'}
     </a>
 
-    {var_dump($urls)}
   </div>
   {/block} {/block}
 </contact@prestashop.com>

@@ -22,37 +22,18 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
-{extends file=$layout}
+{extends file='page.tpl'}
 
-{block name='content'}
+{block name='page_title'}
+  {l s='Create an account' d='Shop.Theme.Customeraccount'}
+{/block}
 
-  <section id="main" class="font-poppins">
-
-    {block name='page_header_container'}
-      {block name='page_title' hide}
-        <header class="page-header">
-          <h1 class="titrePage">{$smarty.block.child}</h1>
-        </header>
-      {/block}
+{block name='page_content'}
+    {block name='register_form_container'}
+      {$hook_create_account_top nofilter}
+      <section class="register-form">
+        <p>{l s='Already have an account?' d='Shop.Theme.Customeraccount'} <a href="{$urls.pages.authentication}">{l s='Log in instead!' d='Shop.Theme.Customeraccount'}</a></p>
+        {render file='customer/_partials/customer-form.tpl' ui=$register_form}
+      </section>
     {/block}
-
-    {block name='page_content_container'}
-      <div id="content" class="page-content card card-block">
-        {block name='page_content_top'}{/block}
-        {block name='page_content'}
-          <!-- Page content -->
-        {/block}
-      </div>
-    {/block}
-
-    {block name='page_footer_container'}
-      <footer class="page-footer">
-        {block name='page_footer'}
-          <!-- Footer content -->
-        {/block}
-      </footer>
-    {/block}
-
-  </section>
-
 {/block}

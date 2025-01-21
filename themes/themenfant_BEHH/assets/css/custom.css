@@ -328,3 +328,203 @@ li .subcategory-name:hover h5{
   border: 2px solid black;
   border-right: 1px solid black;
 }
+
+
+
+
+
+
+/* style bouton radio */
+
+/* From Uiverse.io by Lu2ovic */ 
+.radio-input {
+  display: flex;
+  gap: 16px; /* Espace entre les lignes */
+}
+
+.radio-b {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-b__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-b__label {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Espace entre le carré et le texte */
+  font-size: 15px;
+  color: #000000;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.radio-b__custom {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #000000;
+  border-radius: 0%;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.radio-b__custom-fill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 10px;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 230, 118, 1) 0%,
+    rgba(255, 215, 0, 1) 100%
+  );
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.radio-b__input:checked + .radio-b__label .radio-b__custom-fill {
+  width: 26px;
+  height: 26px;
+  transition: all 0.3s ease;
+}
+
+.radio-b__input:checked + .radio-b__label .radio-b__custom {
+  border: none; /* Supprime les bordures noires */
+  transition: all 0.3s ease; /* Assure une transition fluide */
+}
+
+.radio-b__input:hover + .radio-b__label .radio-b__custom {
+  transform: scale(0.85);
+  color: linear-gradient(
+    0deg,
+    rgba(0, 230, 118, 1) 0%,
+    rgba(255, 215, 0, 1) 100%
+  );
+}
+
+/* Optionnel : style pour le texte */
+.radio-b__text {
+  font-size: 15px;
+  color: #000000;
+  font-weight: 600;
+}
+
+
+/*        accordéon        */
+.pane {
+  flex-grow: 1;
+  transition: all 0.7s ease-in-out, transform 0.4s ease-in-out;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+  min-width: 3.5rem;
+  min-height: 6.5rem;
+  height: 100%;
+}
+
+.pane:not(.active):hover {
+  transform: scale(0.98);
+}
+
+.pane .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scale(1.05);
+  transition: transform 0.7s ease-in-out;
+  z-index: 10;
+}
+
+.pane .shadow {
+  position: absolute;
+  bottom: 0;
+  height: 80%;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50%);
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+  z-index: 20;
+}
+
+.pane .colorFiltre {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.4;
+  transition: opacity 0.4s ease-in-out;
+  z-index: 20;
+}
+
+.pane:not(.active):hover .colorFiltre {
+  opacity: 0.7;
+}
+
+.pane .label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0.5rem;
+  display: flex;
+  z-index: 30;
+  transition: transform 0.7s ease-in-out;
+}
+
+.pane .label .content > * {
+  opacity: 0;
+  transform: translateX(1rem);
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+}
+
+.pane.active {
+  flex-grow: 10;
+  max-width: 100%;
+}
+
+.pane.active .background {
+  transform: scale(1.25);
+}
+
+.pane.active .label {
+  transform: translateX(0.5rem);
+}
+
+.pane.active .label .content > * {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pane.active .shadow {
+  opacity: 0.75;
+  transform: translateY(0);
+}
+
+
+
+
+/* titre de page*/
+
+.titrePage{
+  font-family: "ADLaM Display", sans-serif;
+  text-align: center;
+  height: 40px;
+  font-size: 32px;
+}
+
+@media (min-width: 800px) {
+  .titrePage {
+    height: 50px;
+    font-size: 40px;
+  }
+}
