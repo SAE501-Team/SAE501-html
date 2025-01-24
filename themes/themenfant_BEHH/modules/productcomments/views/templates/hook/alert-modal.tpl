@@ -37,7 +37,7 @@
 
 <div id="{$modal_id}" class="modal fade product-comment-modal" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content !border-3 !border-black">
       <div class="modal-header">
         <p class="h2">
           <i class="material-icons {$icon}" data-icon="{$icon}"></i>
@@ -49,7 +49,7 @@
           {$modal_message}
         </div>
         <div class="post-comment-buttons">
-          <button type="button" class="btn btn-comment btn-comment-huge" data-dismiss="modal">
+          <button type="button" class="btn btn-comment btn-comment-huge btn-primary !bg-be-rose transition ease-out duration-500 hover:scale-[1.04] hover:!bg-be-bleu" data-dismiss="modal">
             {l s='OK' d='Modules.Productcomments.Shop'}
           </button>
         </div>

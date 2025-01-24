@@ -167,6 +167,17 @@ class CategoryControllerCore extends ProductListingFrontController
         $rendered_category_footer = $this->render('catalog/_partials/category-footer', ['listing' => $data]);
         $data['rendered_products_footer'] = $rendered_category_footer;
 
+        // Charger le repository des commentaires produits
+        $productCommentRepository = $this->context->controller->getContainer()->get('product_comment_repository');
+
+        // Ajouter les informations de commentaires aux produits
+        foreach ($data['products'] as &$product) {
+            $product['productComments'] = [
+                'averageRating' => $productCommentRepository->getAverageGradeForProduct($product['id_product']),
+                'nbComments' => $productCommentRepository->getCommentsNumberForProduct($product['id_product']),
+            ];
+        }
+
         return $data;
     }
 

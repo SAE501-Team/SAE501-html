@@ -23,21 +23,30 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 
-<div class="product-comment-list-item row" data-product-comment-id="@COMMENT_ID@" data-product-id="@PRODUCT_ID@">
+<div class="product-comment-list-item row  !border-3 !border-black" data-product-comment-id="@COMMENT_ID@" data-product-id="@PRODUCT_ID@">
   <div class="col-sm-3 comment-infos">
-    <div class="grade-stars" data-grade="@COMMENT_GRADE@"></div>
-    <div class="comment-date">
-      @COMMENT_DATE@
+    <div class="grade-stars" data-grade="@COMMENT_GRADE@"></div> 
+    <div class="sousGrad">
+      <div>
+        <div class="comment-date">
+          @COMMENT_DATE@
+        </div>
+        <div class="comment-author">
+          {l s='By %1$s' sprintf=['@CUSTOMER_NAME@'] d='Modules.Productcomments.Shop'}
+        </div>
+      </div>
+      <div class="photoProfil">
+        <img class="chevre1" src="{$urls.child_img_url}/chevreTete.png" alt="tête de chèvre">
+        <img class="chevre2" src="{$urls.child_img_url}/chevrePPcontent.png" alt="tête de chèvre">
+      </div>
     </div>
-    <div class="comment-author">
-      {l s='By %1$s' sprintf=['@CUSTOMER_NAME@'] d='Modules.Productcomments.Shop'}
-    </div>
+    
   </div>
 
   <div class="col-sm-9 comment-content">
     <p class="h4">@COMMENT_TITLE@</p>
     <p>@COMMENT_COMMENT@</p>
-    <div class="comment-buttons btn-group">
+    <div class="comment-buttons btn-group ">
       {if $usefulness_enabled}
         <a class="useful-review">
           <i class="material-icons thumb_up" data-icon="thumb_up"></i>

@@ -25,7 +25,7 @@
 
 <div id="empty-product-comment" class="product-comment-list-item">
   {if $post_allowed}
-    <button class="btn btn-comment btn-comment-big post-product-comment">
+    <button class="btn btn-comment btn-comment-big post-product-comment btn-primary !bg-be-rose transition ease-out duration-500 hover:scale-[1.04] hover:!bg-be-bleu">
       <i class="material-icons edit" data-icon="edit"></i>
       {l s='Be the first to write your review' d='Modules.Productcomments.Shop'}
     </button>

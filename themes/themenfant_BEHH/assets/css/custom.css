@@ -78,6 +78,10 @@ li .subcategory-name:hover h5{
   background-color: #619bf9;
 }
 
+.qty .input-group{
+  width: 73px;
+}
+
 /* les étoiles pas label */
 
 .rating .distar {
@@ -124,8 +128,19 @@ li .subcategory-name:hover h5{
   flex-direction: row; /* Pour inverser l'ordre et aligner dans le bon sens */
   gap: 0.3rem;
 }
+.product-miniature .product-description {
+  margin-top: -18px;
+}
 
-
+.product-miniature .thumbnail-container:focus .product-description::after, .product-miniature .thumbnail-container:hover .product-description::after {
+  position: absolute;
+  top: -50px;
+  left: 10%;
+  width: 80%;
+  content: "";
+  border-top: #ffd602 1px solid;
+  opacity: 1;
+}
 
 /* Caddie */
 
@@ -421,7 +436,7 @@ li .subcategory-name:hover h5{
 
 /*        accordéon        */
 .pane {
-  flex-grow: 1;
+  flex-grow: 1.5;
   transition: all 0.7s ease-in-out, transform 0.4s ease-in-out;
   overflow: hidden;
   border-radius: 10px;
@@ -475,6 +490,7 @@ li .subcategory-name:hover h5{
   position: absolute;
   bottom: 0;
   left: 0;
+  margin-right: 8px;
   margin-bottom: 0.5rem;
   display: flex;
   z-index: 30;
@@ -510,8 +526,26 @@ li .subcategory-name:hover h5{
   transform: translateY(0);
 }
 
+.pane .icon {
+  transition: transform 0.3s ease 0.2s;
+  margin: 0.5rem;
+  height: 72px;
+  width: 72px;
+}
 
+.pane .content .title, .pane .content .subtitle{
+  text-align: left;
+}
 
+@media screen and (min-width: 768px) and (max-width: 988px) {
+  .pane .icon {
+    transform: scale(0.7) translateX(-19px);
+  }
+
+  .pane.active .icon{
+    transform: scale(1) translateX(0px);
+  }
+}
 
 /* titre de page*/
 
@@ -520,6 +554,18 @@ li .subcategory-name:hover h5{
   text-align: center;
   height: 40px;
   font-size: 32px;
+}
+
+.poseContent{
+  margin-top:14px !important;
+}
+
+
+
+@media (min-width: 640px) {
+  .poseContent{
+    margin-top:30px !important;
+  }
 }
 
 @media (min-width: 800px) {

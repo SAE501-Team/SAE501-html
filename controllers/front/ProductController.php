@@ -1231,6 +1231,7 @@ class ProductControllerCore extends ProductPresentingFrontControllerCore
 
         $product_full = $this->addProductCustomizationData($product_full);
 
+
         $product_full['show_quantities'] = (bool) (
             Configuration::get('PS_DISPLAY_QTIES')
             && Configuration::get('PS_STOCK_MANAGEMENT')

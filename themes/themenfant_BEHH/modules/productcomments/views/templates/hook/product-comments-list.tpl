@@ -62,7 +62,7 @@
     {/if}
   </div>
   {if $post_allowed && $nb_comments != 0}
-    <button class="btn btn-comment btn-comment-big post-product-comment">
+    <button class="btn btn-comment btn-comment-big post-product-comment btn-primary !bg-be-rose transition ease-out duration-500 hover:scale-[1.04] hover:!bg-be-bleu">
       <i class="material-icons edit" data-icon="edit"></i>
       {l s='Write your review' d='Modules.Productcomments.Shop'}
     </button>
