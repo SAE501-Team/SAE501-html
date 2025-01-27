@@ -25,3 +25,81 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
+
+/* Style pour positionner le carré */
+#form-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    background-color: #7BAAF7;
+    border-radius: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+#form-container img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+}
+
+/* Style pour le formulaire masqué par défaut */
+#form-content {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    width: 330px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: solid 3px black;
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+#form-content .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+#form-content .form-group select,
+#form-content button {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#form-content button {
+    background-color: #7BAAF7;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#form-content button:hover {
+    background-color: #5f97f2;
+}
+
+/* Transition et animation */
+#form-container.open {
+    width: 300px;
+    height: auto;
+}
+
+#form-content.show {
+    display: flex;
+}

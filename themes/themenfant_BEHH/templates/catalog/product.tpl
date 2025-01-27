@@ -63,7 +63,7 @@
               {block name='product_flags'}
                 {assign var="positions" value=["right-0", "right-[63px]", "right-[125px]"]}
 
-                <div class="font-adlam h-[32px] text-white">
+                <div class="font-adlam h-0 text-white poseBadge">
                   {foreach from=$product_categories item=categorie} {if $categorie.name
                   == "Mélange Magique" || $categorie.name == "Magic Blend"}
                     {assign var="currentPosition" value=$positions|@array_shift}
@@ -108,7 +108,7 @@
         <div class="col-md-6">
           {block name='page_header_container'}
             {block name='page_header'}
-              <h1 class="h1">{block name='page_title'}{$product.name}{/block}</h1>
+              <h1 class="h1 font-adlam">{block name='page_title'}{$product.name}{/block}</h1>
             {/block}
               
           {/block}
@@ -175,7 +175,7 @@
             {/block}
 
             {block name='product_tabs'}
-              <div class="tabs">
+              <div class="tabs !border-3 !border-black">
                 <ul class="nav nav-tabs" role="tablist">
                   {if $product.description}
                     <li class="nav-item">

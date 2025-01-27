@@ -142,6 +142,16 @@ li .subcategory-name:hover h5{
   opacity: 1;
 }
 
+
+.poseBadge{
+  margin-right:4px;
+  transform:translateY(-50px);
+}
+
+.social-sharing{
+  display:none;
+}
+
 /* Caddie */
 
 .product-description .quick-view {
@@ -547,6 +557,25 @@ li .subcategory-name:hover h5{
   }
 }
 
+.tabs .nav-tabs .nav-link.active {
+  color: #7BAAF7 !important;
+}
+.tabs .nav-tabs .nav-link.active, .tabs .nav-tabs .nav-link:hover {
+  border-bottom: #7BAAF7 3px solid !important;
+}
+
+.links .link-item{
+  color:#000000;
+  transition: color 0.3s ease;
+}
+.links .link-item:hover, .links .link-item:hover i, .pagination .current a{
+  color:#7BAAF7 !important;
+}
+
+.page-my-account #content .links a span.link-item {
+  background: #7baaf71f;
+}
+
 /* titre de page*/
 
 .titrePage{
@@ -560,6 +589,12 @@ li .subcategory-name:hover h5{
   margin-top:14px !important;
 }
 
+
+@media (max-width: 990px) {
+  .product-quantity .likedp, .product-quantity .wishlist-button-add{
+    transform: translate(-90px, -98px);
+  }
+}
 
 
 @media (min-width: 640px) {

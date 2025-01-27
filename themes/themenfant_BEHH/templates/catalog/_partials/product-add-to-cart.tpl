@@ -89,7 +89,7 @@
           sprintf=['%quantity%' => $product.minimal_quantity]
           }
         {/if}
-      </p>
+      </p> 
     {/block}
   {/if}
 </div>

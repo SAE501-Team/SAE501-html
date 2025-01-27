@@ -29,13 +29,21 @@ $sql[] = "CREATE TABLE IF NOT EXISTS `ps_user_recommandation` (
     `id_customer` INT(10) UNSIGNED NOT NULL,
     `type_consommation` ENUM('sportif', 'gourmand', 'bio') NULL,
     `souhaitez_cereales_originales` ENUM('oui', 'non') NULL,
-    `gout_prefere` ENUM('chocolat', 'nature', 'sucree', 'miel', 'caramel', 'speculoos', 'fraise') NULL,
+    `gout_prefere` ENUM('chocolat', 'nature', 'sucree', 'miel', 'caramel', 'speculoos', 'fruits rouges') NULL,
     `forme_favorite` ENUM('boule', 'triangle', 'cube', 'petale', 'donut', 'etoile') NULL,
     `consommation_pour_qui` ENUM('personnel', 'enfants', 'les deux') NULL,
     PRIMARY KEY (`id_customer`),
     FOREIGN KEY (`id_customer`) REFERENCES `ps_customer` (`id_customer`) ON DELETE CASCADE
 );";
 
+
+$sql[] = "CREATE TABLE IF NOT EXISTS `ps_produit_recommander` (
+    `id_customer` INT(10) UNSIGNED NOT NULL,
+    `id_product` INT(10) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id_customer`, `id_product`),
+    FOREIGN KEY (`id_customer`) REFERENCES `ps_customer` (`id_customer`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_product`) REFERENCES `ps_product` (`id_product`) ON DELETE CASCADE
+);";
 
 
 foreach ($sql as $query) {

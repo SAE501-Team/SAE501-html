@@ -22,11 +22,18 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
-
-{capture assign="productClasses"}col-xs-12 col-sm-6 col-lg-4{/capture}
-<div class="products{if !empty($cssClass)} {$cssClass}{/if} text-xs sm:text-sm ">
-    {foreach from=$products item="product" key="position"}
-        {include file="catalog/_partials/miniatures/product.tpl" product=$product position=$position productClasses=$productClasses}
-    {/foreach}
+<div id="_desktop_cart">
+  <div class="blockcart cart-preview {if $cart.products_count > 0}active{else}inactive{/if}" data-refresh-url="{$refresh_url}">
+    <div class="header">
+      {if $cart.products_count > 0}
+        <a rel="nofollow" aria-label="{l s='Shopping cart link containing %nbProducts% product(s)' sprintf=['%nbProducts%' => $cart.products_count] d='Shop.Theme.Checkout'}" href="{$cart_url}">
+      {/if}
+        <i class="material-icons shopping-cart" aria-hidden="true">shopping_cart</i>
+        <span class="hidden-sm-down">{l s='Cart' d='Shop.Theme.Checkout'}</span>
+        <span class="cart-products-count">({$cart.products_count})</span>
+      {if $cart.products_count > 0}
+        </a>
+      {/if}
+    </div>
+  </div>
 </div>
-
