@@ -195,7 +195,7 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
                   value=$compositions|@array_merge:[$feature.value]} {/if}
                   {/foreach} {if $compositions|@count > 0}
                   <div>
-                    Goûts : {foreach from=$compositions item=value key=index} {if
+                    Formes : {foreach from=$compositions item=value key=index} {if
                     $index == $compositions|@count - 1 && $index > 0} et {/if}
                     {$value}{if $index < $compositions|@count - 2}, {/if}
                     {/foreach}
@@ -209,7 +209,7 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
                   value=$proprietes|@array_merge:[$feature.value]} {/if}
                   {/foreach} {if $proprietes|@count > 0}
                   <div>
-                    Forme : {foreach from=$proprietes item=value key=index} {if
+                    Goûts : {foreach from=$proprietes item=value key=index} {if
                     $index == $proprietes|@count - 1 && $index > 0} et {/if}
                     {$value}{if $index < $proprietes|@count - 2}, {/if} {/foreach}
                   </div>

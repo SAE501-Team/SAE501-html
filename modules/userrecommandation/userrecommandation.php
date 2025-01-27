@@ -23,12 +23,14 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Userrecommandation extends Module
+require_once dirname(__FILE__) . '/src/Entity/CustomerRecommandation.php';
+
+
+class UserRecommandation extends Module
 {
     protected $config_form = false;
 
@@ -56,12 +58,49 @@ class Userrecommandation extends Module
     public function install()
     {
         Configuration::updateValue('USERRECOMMANDATION_LIVE_MODE', false);
-        include(dirname(__FILE__).'/sql/install.php');  // Include the install script to create the table
+        include(dirname(__FILE__).'/sql/install.php'); // Inclure le script SQL
 
-        return parent::install() &&
-            $this->registerHook('header') &&
-            $this->registerHook('displayBackOfficeHeader') &&
-            $this->registerHook('displayCustomerForm');
+        // Ajout du contrôleur
+        if (!parent::install() ||
+            !$this->registerHook('header') ||
+            !$this->registerHook('displayFormReco') ||
+            !$this->registerHook('displayProductReco') ||
+            !$this->registerHook('displayBackOfficeHeader') ||
+            !$this->registerHook('addWebserviceResources') || // Pour le webservice
+            !$this->installTab()
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Méthode pour enregistrer l'onglet (controller) dans le back-office
+    protected function installTab()
+    {
+        $tab = new Tab();
+        $tab->active = 1;
+        $tab->class_name = 'AdminUserrecommandation';
+        $tab->name = [];
+        foreach (Language::getLanguages(true) as $lang) {
+            $tab->name[$lang['id_lang']] = 'Recommandation utilisateur';
+        }
+        $tab->id_parent = (int) Tab::getIdFromClassName('AdminParentModulesSf'); // Placer sous "Modules"
+        $tab->module = $this->name;
+
+        return $tab->add();
+    }
+
+    // Méthode pour supprimer l'onglet lors de la désinstallation
+    protected function uninstallTab()
+    {
+        $id_tab = (int) Tab::getIdFromClassName('AdminUserrecommandation');
+        if ($id_tab) {
+            $tab = new Tab($id_tab);
+            return $tab->delete();
+        }
+
+        return true;
     }
 
     /**
@@ -72,8 +111,21 @@ class Userrecommandation extends Module
         Configuration::deleteByName('USERRECOMMANDATION_LIVE_MODE');
         include(dirname(__FILE__).'/sql/uninstall.php');  // Include the uninstall script to drop the table
 
-        return parent::uninstall();
+        return parent::uninstall() &&
+            $this->uninstallTab() &&
+            include(dirname(__FILE__).'/sql/uninstall.php');
     }
+
+    public function hookAddWebserviceResources($params)
+    {
+        return [
+            'user_recommandations' => [
+                'description' => 'Customer Recommendations', // Description visible via l'API
+                'class' => 'CustomerRecommandation' // Classe associée à cette ressource
+            ],
+        ];
+    }
+
 
     /**
      * Display module configuration page in the back office
@@ -84,7 +136,9 @@ class Userrecommandation extends Module
             $this->postProcess();
         }
 
-        $this->context->smarty->assign('module_dir', $this->_path);
+        $currentUrl = $this->context->link->getAdminLink('AdminUserrecommandation', true);
+        $this->context->smarty->assign('current', $currentUrl);
+
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
 
         return $output.$this->renderForm();
@@ -145,8 +199,11 @@ class Userrecommandation extends Module
         $this->context->controller->addCSS($this->_path.'/views/css/front.css');
     }
 
-    public function hookDisplayCustomerForm($params)
+    public function hookDisplayFormReco($params) //changer ce hook
     {
+        if (!$this->context->customer->isLogged()) {
+            return ''; // Ne rien afficher si l'utilisateur n'est pas connecté
+        }
         // Récupérer les préférences existantes de l'utilisateur
         $id_customer = $this->context->customer->id;
         $preferences = Db::getInstance()->getRow('
@@ -162,12 +219,68 @@ class Userrecommandation extends Module
             'consommation_pour_qui' => $preferences['consommation_pour_qui'] ?? '',
         ));
 
-        return $this->display(__FILE__, 'views/templates/hook/displayCustomerForm.tpl');
+        return $this->display(__FILE__, 'views/templates/hook/displayFormReco.tpl');
+    }
+
+    public function hookDisplayProductReco($params)
+    {
+        if (!$this->context->customer->isLogged()) {
+            return ''; // Ne rien afficher si l'utilisateur n'est pas connecté
+        }
+
+        // Récupérer les IDs des produits recommandés
+        $id_customer = $this->context->customer->id;
+        $productIds = Db::getInstance()->executeS('
+            SELECT id_product FROM `ps_produit_recommander`
+            WHERE `id_customer` = '.(int)$id_customer
+        );
+
+        if (empty($productIds)) {
+            return ''; // Ne rien afficher si aucun produit n'est recommandé
+        }
+
+        // Extraire uniquement les IDs des produits
+        $productIds = array_column($productIds, 'id_product');
+
+        // Charger les produits avec leurs propriétés complètes
+        $products = [];
+        foreach ($productIds as $id_product) {
+            $product = new Product($id_product, true, $this->context->language->id);
+
+            // Ajouter les champs de lien et d'image
+            $productFields = Product::getProductProperties($this->context->language->id, $product->getFields());
+            $productFields['link'] = $this->context->link->getProductLink($product);
+            $productFields['image'] = $this->context->link->getImageLink(
+                $productFields['link_rewrite'], 
+                $productFields['id_image'], 
+                'home_default' // Taille de l'image (modifiable selon votre configuration)
+            );
+
+            // Ajout des produits au tableau
+            $products[] = $productFields;
+        }
+
+        // Assigner les produits au template
+        $this->context->smarty->assign([
+            'products' => $products,
+        ]);
+
+        return $this->display(__FILE__, 'views/templates/hook/displayProductReco.tpl');
     }
 
 
+
+
+/*$this->context->smarty->assign(array(
+            'type_consommation' => $preferences['type_consommation'] ?? '',
+            'souhaitez_cereales_originales' => $preferences['souhaitez_cereales_originales'] ?? '',
+            'gout_prefere' => $preferences['gout_prefere'] ?? '',
+            'forme_favorite' => $preferences['forme_favorite'] ?? '',
+            'consommation_pour_qui' => $preferences['consommation_pour_qui'] ?? '',
+        ));*/
     public function saveCustomerPreferences($id_customer, $type_consommation, $souhaitez_cereales_originales, $gout_prefere, $forme_favorite, $consommation_pour_qui)
     {
+        //PrestaShopLogger::addLog('Je passe dans la fonction saveCustomerPreferences', 1, null, 'CustomTest');
         $existingPreferences = Db::getInstance()->getRow('
             SELECT * FROM `ps_user_recommandation`
             WHERE `id_customer` = '.(int)$id_customer
@@ -198,9 +311,122 @@ class Userrecommandation extends Module
                 )
             );
         }
+        $this->creat_recommandation($id_customer);
     }
 
-    public function postProcess()
+    public function creat_recommandation($id_customer)
+    {
+        PrestaShopLogger::addLog('Id customer : ' . print_r($id_customer, true), 1, null, 'CustomTest');
+        // Connexion à la base
+        $db = Db::getInstance();
+
+        // Requêtes SQL pour récupérer les informations de l'utilisateur
+        $userInfo = $db->getRow("
+            SELECT
+                c.birthday AS date_de_naissance,
+                c.id_gender AS sexe,
+                ur.type_consommation,
+                ur.souhaitez_cereales_originales,
+                ur.gout_prefere,
+                ur.forme_favorite,
+                ur.consommation_pour_qui
+            FROM
+                ps_customer c
+            LEFT JOIN ps_user_recommandation ur ON c.id_customer = ur.id_customer
+            WHERE
+                c.id_customer = $id_customer
+        ");
+
+        PrestaShopLogger::addLog('Données utilisateur récupérées après la connexion: ' . print_r($userInfo, true), 1, null, 'CustomTest');
+
+        // Requêtes SQL pour récupérer les produits noté par l'utilisateur
+        $userRating = $db->executeS("
+            SELECT
+                pc.id_product AS id_produit,
+                pc.grade AS rating,
+                p.price AS prix,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 2 THEN fvl.value END) AS caracteristiques_formes,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 4 THEN fvl.value END) AS caracteristiques_gouts,
+                GROUP_CONCAT(DISTINCT cl.name) AS categorie
+            FROM
+                ps_product_comment pc
+                LEFT JOIN ps_product p ON pc.id_product = p.id_product
+                LEFT JOIN ps_category_product cp ON p.id_product = cp.id_product
+                LEFT JOIN ps_category_lang cl ON cp.id_category = cl.id_category AND cl.id_lang = 1
+                LEFT JOIN ps_feature_product fp ON p.id_product = fp.id_product
+                LEFT JOIN ps_feature f ON fp.id_feature = f.id_feature
+                LEFT JOIN ps_feature_value_lang fvl ON fp.id_feature_value = fvl.id_feature_value AND fvl.id_lang = 1
+            WHERE
+                pc.grade >= 4
+                AND pc.id_customer = $id_customer
+                AND cl.id_category IN (11, 12, 13, 14)
+            GROUP BY
+                pc.id_product;
+        ");
+
+        PrestaShopLogger::addLog('Données utilisateur produit rating récup après la connexion: ' . print_r($userRating, true), 1, null, 'CustomTest');
+
+        // Requêtes SQL pour récupérer les produits dans la wishlist de l'utilisateur
+        $userWishlist = $db->executeS("
+            SELECT
+                wp.id_product AS id_produit_wishlist,
+                p.price AS prix_wishlist,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 2 THEN fvl.value END) AS caracteristiques_formes_wishlist,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 4 THEN fvl.value END) AS caracteristiques_gouts_wishlist,
+                GROUP_CONCAT(DISTINCT cl.name) AS categorie_wishlist
+            FROM
+                ps_wishlist w
+                LEFT JOIN ps_wishlist_product wp ON w.id_wishlist = wp.id_wishlist
+                LEFT JOIN ps_product p ON wp.id_product = p.id_product
+                LEFT JOIN ps_category_product cp ON p.id_product = cp.id_product
+                LEFT JOIN ps_category_lang cl ON cp.id_category = cl.id_category AND cl.id_lang = 1
+                LEFT JOIN ps_feature_product fp ON p.id_product = fp.id_product
+                LEFT JOIN ps_feature f ON fp.id_feature = f.id_feature
+                LEFT JOIN ps_feature_value_lang fvl ON fp.id_feature_value = fvl.id_feature_value AND fvl.id_lang = 1
+            WHERE
+                w.id_customer = $id_customer
+                AND cl.id_category IN (11, 12, 13, 14)
+            GROUP BY
+                wp.id_product;
+        ");
+
+        PrestaShopLogger::addLog('Données utilisateur produit wishlist récup après la connexion: ' . print_r($userWishlist, true), 1, null, 'CustomTest');
+
+        // Requêtes SQL pour récupérer les produits dans le panier de l'utilisateur
+        $userPanier = $db->executeS("
+            SELECT
+                cd.id_product AS id_produit,
+                cd.quantity AS quantite_panier,
+                p.price AS prix,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 2 THEN fvl.value END) AS caracteristiques_formes,
+                GROUP_CONCAT(DISTINCT CASE WHEN f.id_feature = 4 THEN fvl.value END) AS caracteristiques_gouts,
+                GROUP_CONCAT(DISTINCT cl.name) AS categorie
+            FROM
+                ps_cart c
+                LEFT JOIN ps_cart_product cd ON c.id_cart = cd.id_cart
+                LEFT JOIN ps_product p ON cd.id_product = p.id_product
+                LEFT JOIN ps_category_product cp ON p.id_product = cp.id_product
+                LEFT JOIN ps_category_lang cl ON cp.id_category = cl.id_category AND cl.id_lang = 1
+                LEFT JOIN ps_feature_product fp ON p.id_product = fp.id_product
+                LEFT JOIN ps_feature f ON fp.id_feature = f.id_feature
+                LEFT JOIN ps_feature_value_lang fvl ON fp.id_feature_value = fvl.id_feature_value AND fvl.id_lang = 1
+            WHERE
+                c.id_customer = $id_customer
+                AND cl.id_category IN (11, 12, 13, 14)
+            GROUP BY
+                cd.id_product;
+        ");
+
+        PrestaShopLogger::addLog('Données utilisateur produit dans panier récup après la connexion: ' . print_r($userPanier, true), 1, null, 'CustomTest');
+
+        $resultat = $this->generateCustomerProfile($userInfo, $userRating, $userWishlist, $userPanier);
+        // Convertir en JSON
+        $jsonResultat = json_encode($resultat);
+        PrestaShopLogger::addLog('Données utilisateur au format json : ' . print_r($jsonResultat, true), 1, null, 'CustomTest');
+    }
+
+
+    /*public function postProcess()
     {
         // Traitement des préférences utilisateur
         if (Tools::isSubmit('submit_preferences')) {
@@ -210,7 +436,9 @@ class Userrecommandation extends Module
             $gout_prefere = Tools::getValue('gout_prefere');
             $forme_favorite = Tools::getValue('forme_favorite');
             $consommation_pour_qui = Tools::getValue('consommation_pour_qui');
-    
+
+            PrestaShopLogger::addLog('Je passe dans la fonction postProcess', 1, null, 'CustomTest');
+
             $this->saveCustomerPreferences($id_customer, $type_consommation, $souhaitez_cereales_originales, $gout_prefere, $forme_favorite, $consommation_pour_qui);
         }
 
@@ -219,5 +447,114 @@ class Userrecommandation extends Module
         foreach (array_keys($form_values) as $key) {
             Configuration::updateValue($key, Tools::getValue($key));
         }
+    }*/
+    
+    protected function getConfigForm()
+    {
+        return array(
+            'form' => array(
+                'legend' => array(
+                    'title' => $this->l('Settings'),
+                    'icon' => 'icon-cogs',
+                ),
+                'input' => array(
+                    array(
+                        'type' => 'switch',
+                        'label' => $this->l('Live mode'),
+                        'name' => 'USERRECOMMANDATION_LIVE_MODE',
+                        'is_bool' => true,
+                        'desc' => $this->l('Enable or disable live mode'),
+                        'values' => array(
+                            array(
+                                'id' => 'active_on',
+                                'value' => true,
+                                'label' => $this->l('Enabled'),
+                            ),
+                            array(
+                                'id' => 'active_off',
+                                'value' => false,
+                                'label' => $this->l('Disabled'),
+                            ),
+                        ),
+                    ),
+                ),
+                'submit' => array(
+                    'title' => $this->l('Save'),
+                ),
+            ),
+        );
     }
+
+    //fonction pour transformer mes données au bon format json
+    public function generateCustomerProfile($userInfo, $userRating, $userWishlist, $userPanier)
+    {
+        // On commence par structurer les données utilisateur
+        $profile = [
+            "date_de_naissance" => $userInfo['date_de_naissance'],
+            "sexe" => (int)$userInfo['sexe'],
+            "type_consommation" => $userInfo['type_consommation'],
+            "souhaitez_cereales_originales" => ($userInfo['souhaitez_cereales_originales'] === 'oui' ? true : false),
+            "gout_prefere" => $userInfo['gout_prefere'],
+            "forme_favorite" => $userInfo['forme_favorite'],
+            "consommation_pour_qui" => $userInfo['consommation_pour_qui'],
+            "rating" => [], // Nous allons remplir cet array avec les ratings
+            "wish_liste" => [], // Nous allons remplir cet array avec les wishlist
+            "panier" => [] // Nous allons remplir cet array avec les produits du panier
+        ];
+
+        // Transforme les $userRating en données de rating avec details_produit
+        foreach ($userRating as $rating) {
+            $profile['rating'][] = [
+                "id_produit" => (int)$rating['id_produit'],
+                "rating" => (int)$rating['rating'],
+                "details_produit" => [
+                    "id_produit" => (int)$rating['id_produit'],
+                    "prix" => (float)$rating['prix'],
+                    "caracteristiques_formes" => explode(',', $rating['caracteristiques_formes']),
+                    "caracteristiques_gouts" => explode(',', $rating['caracteristiques_gouts']),
+                    "categorie" => explode(',', $rating['categorie'])
+                ]
+            ];
+        }
+
+        // Transforme les $userWishlist en données de wishlist avec details_produit
+        foreach ($userWishlist as $wishlist) {
+            $wishlistData = [
+                "id_produit" => (int)$wishlist['id_produit_wishlist'],
+                "details_produit" => [
+                    "id_produit" => (int)$wishlist['id_produit_wishlist'],
+                    "prix" => (float)$wishlist['prix_wishlist'],
+                    "caracteristiques_formes" => explode(',', $wishlist['caracteristiques_formes_wishlist']),
+                    "caracteristiques_gouts" => explode(',', $wishlist['caracteristiques_gouts_wishlist']),
+                    "categorie" => explode(',', $wishlist['categorie_wishlist'])
+                ]
+            ];
+            
+            // Si la quantité est présente, ajoute-la
+            if (isset($wishlist['quantite_souhaitee'])) {
+                $wishlistData['quantite_souhaitee'] = (int)$wishlist['quantite_souhaitee'];
+            }
+            
+            $profile['wish_liste'][] = $wishlistData;
+        }
+
+        // Transforme les $userPanier en données de panier avec details_produit
+        foreach ($userPanier as $panier) {
+            $profile['panier'][] = [
+                "id_produit" => (int)$panier['id_produit'],
+                "quantite" => (int)$panier['quantite_panier'],
+                "details_produit" => [
+                    "id_produit" => (int)$panier['id_produit'],
+                    "prix" => (float)$panier['prix'],
+                    "caracteristiques_formes" => explode(',', $panier['caracteristiques_formes']),
+                    "caracteristiques_gouts" => explode(',', $panier['caracteristiques_gouts']),
+                    "categorie" => explode(',', $panier['categorie'])
+                ]
+            ];
+        }
+        // Retourner le profil complet sous forme de tableau
+        return $profile;
+    }
+
+
 }

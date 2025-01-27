@@ -27,7 +27,7 @@
 <div class="product-comments-additional-info">
   {if $nb_comments == 0}
     {if $post_allowed}
-      <button class="btn btn-comment post-product-comment">
+      <button class="btn btn-comment post-product-comment btn-primary !bg-be-rose transition ease-out duration-500 hover:scale-[1.04] hover:!bg-be-bleu">
         <i class="material-icons edit" data-icon="edit"></i>
         {l s='Write your review' d='Modules.Productcomments.Shop'}
       </button>

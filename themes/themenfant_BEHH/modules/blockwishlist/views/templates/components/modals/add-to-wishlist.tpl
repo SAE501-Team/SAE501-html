@@ -31,7 +31,7 @@
     aria-modal="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content !border-3 !border-black">
         <div class="modal-header">
           <h5 class="modal-title">
             {$wishlistsTitlePage}
@@ -57,12 +57,6 @@
             add-url="{$addUrl}"
             empty-text="{l s='No list found.' d='Modules.Blockwishlist.Shop'}"
           ></choose-list>
-        </div>
-
-        <div class="modal-footer">
-          <a @click="openNewWishlistModal" class="wishlist-add-to-new text-primary">
-            <i class="material-icons">add_circle_outline</i> {$newWishlistCTA}
-          </a>
         </div>
       </div>
     </div>
