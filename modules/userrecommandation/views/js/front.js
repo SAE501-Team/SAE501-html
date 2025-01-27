@@ -25,3 +25,10 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
+
+const formContainer = document.getElementById('form-container');
+const formContent = document.getElementById('form-content');
+
+formContainer.addEventListener('click', () => {
+    formContent.classList.toggle('show');
+});

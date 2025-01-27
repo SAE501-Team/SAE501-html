@@ -46,7 +46,7 @@ jQuery.fn.rating = function(generalOptions) {
       input: null,
       min: 1,
       max: 5,
-      starWidth: 20
+      starWidth: 30
     }, options);
 
     const minValue = Math.min(componentOptions.min, componentOptions.max);

@@ -44,7 +44,7 @@
         {/block}
       </div>
     {/block}
-
+    
     {block name='page_footer_container'}
       <footer class="page-footer">
         {block name='page_footer'}
@@ -54,5 +54,6 @@
     {/block}
 
   </section>
+
 
 {/block}

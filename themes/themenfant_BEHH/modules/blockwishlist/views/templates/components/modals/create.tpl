@@ -37,7 +37,7 @@
     aria-modal="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content !border-3 !border-black">
         <div class="modal-header">
           <h5 class="modal-title">((title))</h5>
           <button

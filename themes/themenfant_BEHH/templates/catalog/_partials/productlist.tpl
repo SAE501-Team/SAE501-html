@@ -26,10 +26,6 @@
 {capture assign="productClasses"}col-xs-12 col-sm-6 col-lg-4{/capture}
 <div class="products{if !empty($cssClass)} {$cssClass}{/if} text-xs sm:text-sm ">
     {foreach from=$products item="product" key="position"}
-    {if $product.name == 'Froot Loops'}
-        <pre>{var_dump($product)}</pre>
-    {/if}
-        
         {include file="catalog/_partials/miniatures/product.tpl" product=$product position=$position productClasses=$productClasses}
     {/foreach}
 </div>
