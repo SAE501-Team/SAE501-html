@@ -1,5 +1,6 @@
 {extends file='page.tpl'} {block name='page_content_container'}
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<link href="{$urls.child_css_url}/custom-acc.css" rel="stylesheet">
 
 <section id="content" class="page-home p-0 m-0">
   <canvas class="webgl chevreAnim"></canvas>

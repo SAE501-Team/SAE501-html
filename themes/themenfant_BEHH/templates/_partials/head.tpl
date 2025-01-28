@@ -93,9 +93,6 @@
     <script src="{$urls.child_js_url}/custom-login.js"></script>
 {/if}
 
-{if $page.page_name == 'index'}
-    <link href="{$urls.child_css_url}/custom-acc.css" rel="stylesheet">
-{/if}
 
 {block name='stylesheets'}
   {include file="_partials/stylesheets.tpl" stylesheets=$stylesheets}
