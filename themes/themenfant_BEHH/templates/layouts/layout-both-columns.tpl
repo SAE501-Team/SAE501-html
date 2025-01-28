@@ -95,7 +95,6 @@
           </div>
         </div>
         {hook h="displayWrapperBottom"}
-        {hook h="displayProductReco"}
       </section>
 
       <footer id="footer" class="js-footer">

@@ -1,0 +1,51 @@
+body{
+  overflow-x: hidden;
+}
+
+/*    à mettre dans un autre fichier css    */
+#wrapper{
+    padding: 0 !important;
+  }
+  
+  #wrapper .container {
+    max-width: 100% !important;
+  }
+
+
+  .infoAccB .effect, .infoAccB .cereales{
+    display:block;
+  }
+
+  
+
+  @media (max-width: 900px) {
+    .infoAccB .effect, .infoAccB .container-milk, .infoAccB .cereales{
+        display:none;
+      }
+  }
+
+
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+
+.chevreAnim{
+  height: 750px;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+}
+  

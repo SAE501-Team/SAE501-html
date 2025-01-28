@@ -12,7 +12,6 @@ assets:
     all:
       - id: custom-js
         path: assets/js/custom.js
-        priority: 100
 
   css:
     all:

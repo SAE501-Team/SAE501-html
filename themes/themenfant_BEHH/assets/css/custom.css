@@ -1,10 +1,10 @@
 body {
   font-family: "Poppins", sans-serif;
-  background-color: rgb(253, 200, 200);
+  background-color: rgb(255, 255, 255);
 }
 
 #wrapper {
-  background-color: #f6e2e2;
+  background-color: #ffffff;
 }
 
 /* réparation */
@@ -436,6 +436,33 @@ li .subcategory-name:hover h5{
   );
 }
 
+.degRose{
+  background: linear-gradient(
+    0deg,
+    rgba(123,170,247, 1) 0%,
+    rgba(255,64,129, 1) 100%
+  );
+  border-radius: 4px;
+}
+
+
+.desColapse{
+  color:#000000;
+  border: solid 2px #000000;
+  font-family: "ADLaM Display", sans-serif;
+  font-size: 14px;
+  background: #fff;
+}
+
+.desColapse .select-title, .desColapse .select-list, .desColapse .select-title:hover, .desColapse .select-title:active{
+  background: #fff;
+}
+
+.desColapse .select-list:hover{
+  background-color: #7BAAF7;
+}
+
+
 /* Optionnel : style pour le texte */
 .radio-b__text {
   font-size: 15px;
@@ -590,6 +617,11 @@ li .subcategory-name:hover h5{
 }
 
 
+.customNav a:hover{
+  color:#7BAAF7;
+}
+
+
 @media (max-width: 990px) {
   .product-quantity .likedp, .product-quantity .wishlist-button-add{
     transform: translate(-90px, -98px);
@@ -608,4 +640,261 @@ li .subcategory-name:hover h5{
     height: 50px;
     font-size: 40px;
   }
+}
+
+@font-face {
+  font-family: "ADLaM Display";
+  src: url("/fonts/ADLaM-Display.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+  .effect{
+    display:none;
+  }
+*/
+.bolBack {
+  height: 180px;
+  position: absolute;
+  top: 440px;
+  left: 527px;
+  z-index: 0;
+}
+
+.back {
+  z-index: 0 !important;
+}
+
+.bottle {
+  height: 500px;
+  width: auto;
+  position: absolute;
+  z-index: 1;
+  top: -65px;
+  left: 202px;
+  transform: rotate(70deg);
+  border-radius: 90px 90px 32px 32px;
+  transition: all 0.7s ease;
+}
+
+.bottleFront:hover .bottle {
+  transform: rotate(90deg);
+}
+
+.container-milk {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.milk {
+  position: relative;
+  width: 850px;
+}
+
+#milk_bg{
+  filter: blur(4px);
+  background: transparent;
+}
+
+.bolFront {
+  z-index: 1;
+  pointer-events: none;
+}
+
+#monCanvas {
+  filter: url(#gooey);
+  
+}
+
+
+.milk button {
+  position: relative;
+  top: 100px;
+  left: 580px;
+  padding: 20px 20px;
+  background: #ff4081;
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.milk .icon-1 {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  transform: translate(-50%, 0);
+  width: 0px;
+  height: auto;
+  transition: all 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.milk .icon-1 svg {
+  width: 52px;
+  height: 16px;
+  transition: all 0.5s ease-in-out;
+}
+
+.milk .icon-2 svg {
+  width: 16px;
+  height: 12px;
+  transition: all 0.5s ease-in-out;
+}
+
+.milk button:hover .icon-1 svg {
+  width: 152px;
+  height: 116px;
+}
+
+.milk button:hover .icon-2 svg {
+  width: 116px;
+  height: 102px;
+}
+
+.milk .icon-2 {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 0px;
+  height: auto;
+  transition: all 0.5s ease-in-out;
+  z-index: -2;
+}
+
+.milk button:hover {
+  padding: 30px 20px;
+  border-radius: 15px 15px 70px 70px;
+}
+
+.milk button:hover .icon-1 {
+  top: -60%;
+  left: -20%;
+  transform: translate(-50%, 0);
+  width: 50px;
+  height: auto;
+  animation: inIcon1 1s ease 0.45s forwards;
+}
+
+@keyframes inIcon1 {
+  0% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+
+  25% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(5deg);
+  }
+
+  50% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(1deg);
+  }
+
+  65% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(3deg);
+  }
+
+  100% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+}
+
+.milk button:hover .icon-2 {
+  position: absolute;
+  top: -60%;
+  left: 60%;
+  transform: translate(-50%, 0);
+  width: 75px;
+  height: auto;
+  animation: inIcon2 1s ease 0.45s forwards;
+}
+
+@keyframes inIcon2 {
+  0% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(0deg);
+  }
+
+  35% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(10deg);
+  }
+
+  50% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(4deg);
+  }
+
+  80% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(5deg);
+  }
+
+  100% {
+    transform-origin: 0 100%;
+    transform: translate(-50%, 0) rotate(2deg);
+  }
+}
+
+#content-wrapper {
+  padding: 0 !important;
+}
+
+/* Style général pour les lettres flottantes */
+.letter {
+  transition: transform 0.1s ease-out;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.cereales {
+  transform: rotate(90);
+  max-width: 22rem;
+}
+
+
+/* éléments header*/
+
+.language-selector-wrapper{
+  display: none;
+}
+
+#block-newsletter-label{
+  display: none;
+}
+
+#blockEmailSubscription_displayFooterBefore{
+  background-color: black !important;
+  display: flex;
+  justify-content: center;
+
+}
+
+#_desktop_user_info .row, #_desktop_cart .row, .block_newsletter .row{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

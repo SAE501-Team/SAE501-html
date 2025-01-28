@@ -3,9 +3,9 @@ import json
 from datetime import datetime
 
 # Définir les listes de caractéristiques
-all_tastes = ["Chocolat", "Nature", "Sucré", "Miel", "Caramel", "Speculoos", "Fraise"]
-all_shapes = ["Boule", "Triangle", "Cube", "Petale", "Donut", "Etoile"]
-all_categories = ["Bio", "Gourmand", "Sportif", "Mélange magique"]
+#all_tastes = ["Chocolat", "Nature", "Sucré", "Miel", "Caramel", "Speculoos", "Fraise"]
+#all_shapes = ["Boule", "Triangle", "Cube", "Petale", "Donut", "Etoile"]
+#all_categories = ["Bio", "Gourmand", "Sportif", "Mélange magique"]
 
 def get_age(date_of_birth):
     birth_date = datetime.strptime(date_of_birth, "%Y-%m-%d")

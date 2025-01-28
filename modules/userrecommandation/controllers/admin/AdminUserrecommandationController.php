@@ -47,9 +47,9 @@ class AdminUserrecommandationController extends ModuleAdminController
         // Exemple d'exécution d'un script Python
         $command = escapeshellcmd(
             'python3 ' . _PS_MODULE_DIR_ . 'userrecommandation/model_ia/model.py ' .
-            escapeshellarg($json_donnees_user) . ' ' .
-            escapeshellarg($json_donnees_product) . ' ' .
-            escapeshellarg($dynamicValuesJson)
+            $json_donnees_user . ' ' .
+            $json_donnees_product . ' ' .
+            $dynamicValuesJson
         );
 
         $output = [];

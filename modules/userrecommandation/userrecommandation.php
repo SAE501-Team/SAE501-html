@@ -23,6 +23,12 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
+
+use PrestaShop\PrestaShop\Adapter\Image\ImageRetriever;
+use PrestaShop\PrestaShop\Adapter\Product\PriceFormatter;
+use PrestaShop\PrestaShop\Adapter\Product\ProductColorsRetriever;
+use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -225,25 +231,104 @@ class UserRecommandation extends Module
     public function hookDisplayProductReco($params)
     {
         if (!$this->context->customer->isLogged()) {
-            return ''; // Ne rien afficher si l'utilisateur n'est pas connecté
-        }
-
-        // Récupérer les IDs des produits recommandés
-        $id_customer = $this->context->customer->id;
-        $productIds = Db::getInstance()->executeS('
-            SELECT id_product FROM `ps_produit_recommander`
-            WHERE `id_customer` = '.(int)$id_customer
-        );
-
-        if (empty($productIds)) {
-            return ''; // Ne rien afficher si aucun produit n'est recommandé
+            // Si l'utilisateur n'est pas connecté, récupérer les produits via la requête SQL par défaut
+            $productIds = Db::getInstance()->executeS('
+                SELECT pc.id_product AS id_product
+                FROM ps_product_comment pc
+                LEFT JOIN ps_product p ON pc.id_product = p.id_product
+                LEFT JOIN ps_category_product cp ON p.id_product = cp.id_product
+                LEFT JOIN ps_category_lang cl ON cp.id_category = cl.id_category AND cl.id_lang = 1
+                WHERE pc.grade >= 4
+                AND cl.id_category IN (11, 12, 13, 14)
+                GROUP BY pc.id_product
+                ORDER BY AVG(pc.grade) DESC
+                LIMIT 8
+            ');
+        
+        } else {
+            // Si l'utilisateur est connecté, récupérer les produits recommandés
+            $id_customer = $this->context->customer->id;
+            $productIds = Db::getInstance()->executeS('
+                SELECT id_product 
+                FROM ps_produit_recommander
+                WHERE id_customer = '.(int)$id_customer
+            );
+        
+            // Si aucun produit n'est trouvé, utiliser la requête SQL par défaut
+            if (empty($productIds)) {
+                $productIds = Db::getInstance()->executeS('
+                    SELECT pc.id_product AS id_product
+                    FROM ps_product_comment pc
+                    LEFT JOIN ps_product p ON pc.id_product = p.id_product
+                    LEFT JOIN ps_category_product cp ON p.id_product = cp.id_product
+                    LEFT JOIN ps_category_lang cl ON cp.id_category = cl.id_category AND cl.id_lang = 1
+                    WHERE pc.grade >= 4
+                    AND cl.id_category IN (11, 12, 13, 14)
+                    GROUP BY pc.id_product
+                    ORDER BY AVG(pc.grade) DESC
+                    LIMIT 3
+                ');
+            }
         }
 
         // Extraire uniquement les IDs des produits
+
         $productIds = array_column($productIds, 'id_product');
+        $productidValue = implode(",", $productIds);
+        
+        //PrestaShopLogger::addLog('Product avant implode : ' . print_r($productIds, true), 1, null, 'CustomTest');
+
+        $products = $this->getProductsReco(
+            (int) $this->context->language->id,
+            0,
+            3,
+            'id_product',
+            'ASC',
+            $productidValue,
+            false,
+            true
+        );
+
+        $assembler = new ProductAssembler($this->context);
+
+        $presenterFactory = new ProductPresenterFactory($this->context);
+        $presentationSettings = $presenterFactory->getPresentationSettings();
+        if (version_compare(_PS_VERSION_, '1.7.5', '>=')) {
+            $presenter = new \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductListingPresenter(
+                new ImageRetriever(
+                    $this->context->link
+                ),
+                $this->context->link,
+                new PriceFormatter(),
+                new ProductColorsRetriever(),
+                $this->context->getTranslator()
+            );
+        } else {
+            $presenter = new \PrestaShop\PrestaShop\Core\Product\ProductListingPresenter(
+                new ImageRetriever(
+                    $this->context->link
+                ),
+                $this->context->link,
+                new PriceFormatter(),
+                new ProductColorsRetriever(),
+                $this->context->getTranslator()
+            );
+        }
+
+        $products_for_template = [];
+
+        if (is_array($products)) {
+            foreach ($products as $rawProduct) {
+                $products_for_template[] = $presenter->present(
+                    $presentationSettings,
+                    $assembler->assembleProduct($rawProduct),
+                    $this->context->language
+                );
+            }
+        }
 
         // Charger les produits avec leurs propriétés complètes
-        $products = [];
+        /*$products = [];
         foreach ($productIds as $id_product) {
             $product = new Product($id_product, true, $this->context->language->id);
 
@@ -258,11 +343,11 @@ class UserRecommandation extends Module
 
             // Ajout des produits au tableau
             $products[] = $productFields;
-        }
+        }*/
 
         // Assigner les produits au template
         $this->context->smarty->assign([
-            'products' => $products,
+            'products' => $products_for_template,
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/displayProductReco.tpl');
@@ -556,5 +641,35 @@ class UserRecommandation extends Module
         return $profile;
     }
 
+
+    static public function getProductsReco($id_lang, $start, $limit, $orderBy, $orderWay, $productsIds, $id_category = false, $only_active = false)
+	{
+		if (!Validate::isOrderBy($orderBy) OR !Validate::isOrderWay($orderWay))
+			die (Tools::displayError());
+		if ($orderBy == 'id_product' OR	$orderBy == 'price' OR	$orderBy == 'date_add')
+			$orderByPrefix = 'p';
+		elseif ($orderBy == 'name')
+			$orderByPrefix = 'pl';
+		elseif ($orderBy == 'position')
+			$orderByPrefix = 'c';
+		$rq = Db::getInstance()->ExecuteS('
+		SELECT p.*, pl.* , m.`name` AS manufacturer_name, s.`name` AS supplier_name
+		FROM `'._DB_PREFIX_.'product` p
+		LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON (p.`id_product` = pl.`id_product`)
+		LEFT JOIN `'._DB_PREFIX_.'manufacturer` m ON (m.`id_manufacturer` = p.`id_manufacturer`)
+		LEFT JOIN `'._DB_PREFIX_.'supplier` s ON (s.`id_supplier` = p.`id_supplier`)'.
+		($id_category ? 'LEFT JOIN `'._DB_PREFIX_.'category_product` c ON (c.`id_product` = p.`id_product`)' : '').'
+		WHERE pl.`id_lang` = '.intval($id_lang).
+		($id_category ? ' AND c.`id_category` = '.intval($id_category) : '').
+		($only_active ? ' AND p.`active` = 1' : '').'
+        AND p.`id_product` IN ('.$productsIds.')
+		ORDER BY '.(isset($orderByPrefix) ? pSQL($orderByPrefix).'.' : '').'`'.pSQL($orderBy).'` '.pSQL($orderWay).
+		($limit > 0 ? ' LIMIT '.intval($start).','.intval($limit) : '')
+		);
+		if($orderBy == 'price')
+			Tools::orderbyPrice($rq,$orderWay);
+
+		return ($rq);
+	}
 
 }

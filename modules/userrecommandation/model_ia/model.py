@@ -1,10 +1,47 @@
 import json
 import sys
 import numpy as np
+import re
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Dropout, Concatenate
 from sklearn.model_selection import train_test_split
 from data_preprocessing import encode_user_features, encode_product_features
+
+def nettoyer_argument(arg):
+    try:
+        # 1. Remplacer les guillemets successifs doubles par un seul
+        arg = re.sub(r'""+', '"', arg)
+
+        # 2. Ajouter des guillemets autour des clés (clé sans guillemets)
+        arg = re.sub(r'(?<!")([a-zA-Z0-9_]+)(?=\s*:)', r'"\1"', arg)
+
+        # 3. Ajouter des guillemets autour des valeurs texte non numériques
+        arg = re.sub(r':\s*([a-zA-Z_]+)(?=[,\}])', r': "\1"', arg)
+
+        # 4. Remplacer true/false/null entre guillemets par leurs valeurs JSON valides
+        arg = re.sub(r'"(true|false|null)"', r'\1', arg)
+
+        # 5. Encadrer les dates non entourées de guillemets
+        arg = re.sub(r'(?<!")(\d{4}-\d{2}-\d{2})(?!")', r'"\1"', arg)
+
+        # 6. Corriger les listes avec des chaînes manquantes de guillemets
+        arg = re.sub(r'\[([a-zA-Z0-9_,\s]+)\]', lambda m: 
+                     '[' + ','.join(f'"{v.strip()}"' for v in m.group(1).split(',')) + ']', arg)
+
+        # 7. Supprimer les espaces inutiles
+        arg = re.sub(r'\s+', ' ', arg)
+
+        # 8. Vérifier si le JSON est bien formé
+        json_object = json.loads(arg)
+        return arg
+
+    except json.JSONDecodeError as e:
+        print(f"Erreur JSON après nettoyage : {e}")
+        print("Problème au niveau de la chaîne corrigée :")
+        print(arg)
+        raise ValueError("Le JSON reste mal formé après correction.")
+
+
 
 def train_model(users_data, products_data, dynamic_values):
     # Préparer les données d'entraînement
@@ -84,9 +121,30 @@ def train_model(users_data, products_data, dynamic_values):
 
 # Vérifier que des arguments sont passés
 if __name__ == "__main__":
-    # Passer les données depuis la ligne de commande
-    users_data = json.loads(sys.argv[1])
-    products_data = json.loads(sys.argv[2])
-    dynamic_values = json.loads(sys.argv[3])
-    print("je suis là")
+    try:
+        #print(f"Argument brut 1 : {sys.argv[1]}")
+        cleaned_json_1 = nettoyer_argument(sys.argv[1])
+        cleaned_json_2 = nettoyer_argument(sys.argv[2])
+        cleaned_json_3 = nettoyer_argument(sys.argv[3])
+
+        print(f"Argument clean : {cleaned_json_1}")
+        # Charger les données JSON des arguments nettoyés
+        users_data = json.loads(cleaned_json_1)
+        products_data = json.loads(cleaned_json_2)
+        dynamic_values = json.loads(cleaned_json_3)
+        print(f"Argument jsoner : {users_data}")
+    
+    except IndexError:
+        print("Erreur : Vous devez passer 3 arguments à ce script.")
+        sys.exit(1)
+
+    except json.JSONDecodeError as e:
+        print(f"Erreur de décodeur JSON : {e}")
+        sys.exit(1)
+
+    # Afficher les données nettoyées (optionnel)
+    print("Données chargées et nettoyées avec succès.")
+
+    # Appeler ta fonction de formation du modèle
     train_model(users_data, products_data)
+    print(json.dumps({"status": "success", "message": "Modèle entraîné avec succès"}))

@@ -90,6 +90,11 @@
 {if isset($page.body_classes) && $page.body_classes['cms-id-7']}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/60b2d6b37e.js" crossorigin="anonymous"></script>
+    <script src="{$urls.child_js_url}/custom-login.js"></script>
+{/if}
+
+{if $page.page_name == 'index'}
+    <link href="{$urls.child_css_url}/custom-acc.css" rel="stylesheet">
 {/if}
 
 {block name='stylesheets'}

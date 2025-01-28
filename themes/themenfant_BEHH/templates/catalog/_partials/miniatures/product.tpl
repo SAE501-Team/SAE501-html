@@ -17,6 +17,7 @@ to newer * versions in the future. If you wish to customize PrestaShop for your
   <div
     class="js-product product{if !empty($productClasses)} {$productClasses}{/if}"
   >
+  {*var_dump($product)*}
     <article
       class="product-miniature js-product-miniature"
       data-id-product="{$product.id_product}"
